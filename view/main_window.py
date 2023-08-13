@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from view.dialog import Dialog
+from view.input_dialog import InputDialog
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -198,12 +198,20 @@ class MainWindow(QtWidgets.QMainWindow):
 
         QtCore.QMetaObject.connectSlotsByName(self)
 
+        self.row_data = []
+
     def add_button_clicked(self):
-        dialog = Dialog()
+        dialog = InputDialog(self)
+        dialog.data_submitted.connect(self.add_row)
         dialog.exec()
     
-    def add_row(self):
-        ...
+    def add_row(self, graphical_object):
+        row_position = self.table_widget.rowCount()
+        self.table_widget.insertRow(row_position)
+        self.table_widget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(graphical_object.type))
+        self.table_widget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(graphical_object.name))
+        self.row_data.append(graphical_object)  # Store the data
+        print(self.row_data[0].__dict__)
 
     def remove_button_clicked(self):
         ...

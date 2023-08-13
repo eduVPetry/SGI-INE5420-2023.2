@@ -1,8 +1,10 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from model.graphical_object import GraphicalObject
 
-class Dialog(QtWidgets.QDialog):
+class InputDialog(QtWidgets.QDialog):
+    data_submitted = QtCore.pyqtSignal(GraphicalObject)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -149,16 +151,17 @@ class Dialog(QtWidgets.QDialog):
         QtCore.QMetaObject.connectSlotsByName(self)
 
     def ok_callback(self):
-        print("OK")
-        self.close()
+        graphical_object = GraphicalObject("Graphical_Object_1", "Point", [(0, 0)])  # Hard-coded
+        self.data_submitted.emit(graphical_object)
+        super().accept()
     
     def cancel_callback(self):
         print("CANCEL")
-        self.close()
+        super().reject()
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    dialog = Dialog()
+    dialog = InputDialog()
     dialog.show()
     sys.exit(app.exec())
