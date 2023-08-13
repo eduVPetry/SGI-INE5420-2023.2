@@ -2,6 +2,10 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from model.graphical_object import GraphicalObject
+from model.point import Point
+from model.line import Line
+from model.wireframe import Wireframe
+
 
 class InputDialog(QtWidgets.QDialog):
     data_submitted = QtCore.pyqtSignal(GraphicalObject)
@@ -119,39 +123,59 @@ class InputDialog(QtWidgets.QDialog):
         self.label_10.setText("Point Coordinates")
         self.label_10.setObjectName("label_10")
 
-        # Plain text inputs
-        self.plain_text_input = QtWidgets.QLineEdit(self)
-        self.plain_text_input.setGeometry(QtCore.QRect(30, 30, 191, 31))
-        self.plain_text_input.setObjectName("plainTextEdit")
+        # Text inputs
+        self.name_input = QtWidgets.QLineEdit(self)
+        self.name_input.setGeometry(QtCore.QRect(30, 30, 191, 31))
+        self.name_input.setObjectName("nameInput")
 
-        self.plain_text_input_2 = QtWidgets.QLineEdit(self.tab)
-        self.plain_text_input_2.setGeometry(QtCore.QRect(80, 80, 111, 31))
-        self.plain_text_input_2.setObjectName("plainTextEdit_2")
+        self.point_x_input = QtWidgets.QLineEdit(self.tab)
+        self.point_x_input.setGeometry(QtCore.QRect(80, 80, 111, 31))
+        self.point_x_input.setObjectName("pointXInput")
 
-        self.plain_text_input_3 = QtWidgets.QLineEdit(self.tab)
-        self.plain_text_input_3.setGeometry(QtCore.QRect(250, 80, 111, 31))
-        self.plain_text_input_3.setObjectName("plainTextEdit_3")
+        self.point_y_input = QtWidgets.QLineEdit(self.tab)
+        self.point_y_input.setGeometry(QtCore.QRect(250, 80, 111, 31))
+        self.point_y_input.setObjectName("pointYInput")
 
-        self.plain_text_input_4 = QtWidgets.QLineEdit(self.tab_2)
-        self.plain_text_input_4.setGeometry(QtCore.QRect(240, 70, 111, 31))
-        self.plain_text_input_4.setObjectName("plainTextEdit_4")
+        self.line_x1_input = QtWidgets.QLineEdit(self.tab_2)
+        self.line_x1_input.setGeometry(QtCore.QRect(70, 70, 111, 31))
+        self.line_x1_input.setObjectName("lineX1Input")
 
-        self.plain_text_input_5 = QtWidgets.QLineEdit(self.tab_2)
-        self.plain_text_input_5.setGeometry(QtCore.QRect(70, 70, 111, 31))
-        self.plain_text_input_5.setObjectName("plainTextEdit_5")
+        self.line_y1_input = QtWidgets.QLineEdit(self.tab_2)
+        self.line_y1_input.setGeometry(QtCore.QRect(240, 70, 111, 31))
+        self.line_y1_input.setObjectName("lineY1Input")
 
-        self.plain_text_input_6 = QtWidgets.QLineEdit(self.tab_2)
-        self.plain_text_input_6.setGeometry(QtCore.QRect(240, 190, 111, 31))
-        self.plain_text_input_6.setObjectName("plainTextEdit_6")
+        self.line_x2_input = QtWidgets.QLineEdit(self.tab_2)
+        self.line_x2_input.setGeometry(QtCore.QRect(70, 190, 111, 31))
+        self.line_x2_input.setObjectName("lineX2Input")
 
-        self.plain_text_input_7 = QtWidgets.QLineEdit(self.tab_2)
-        self.plain_text_input_7.setGeometry(QtCore.QRect(70, 190, 111, 31))
-        self.plain_text_input_7.setObjectName("plainTextEdit_7")
+        self.line_y2_input = QtWidgets.QLineEdit(self.tab_2)
+        self.line_y2_input.setGeometry(QtCore.QRect(240, 190, 111, 31))
+        self.line_y2_input.setObjectName("lineY2Input")
 
         QtCore.QMetaObject.connectSlotsByName(self)
 
     def ok_callback(self):
-        graphical_object = GraphicalObject("Graphical_Object_1", "Point", [(0, 0)])  # Hard-coded
+        name = self.name_input.text()
+        coordinates = []
+
+        current_index = self.tab_widget.currentIndex()
+        if current_index == 0:
+            x = float(self.point_x_input.text())
+            y = float(self.point_y_input.text())
+            coordinates.append((x, y))
+            graphical_object = Point(name, coordinates)
+        elif current_index == 1:
+            x1 = float(self.line_x1_input.text())
+            y1 = float(self.line_y1_input.text())
+            coordinates.append((x1, y1))
+            x2 = float(self.line_x2_input.text())
+            y2 = float(self.line_y2_input.text())
+            coordinates.append((x2, y2))
+            graphical_object = Line(name, coordinates)
+        elif current_index == 2:
+            # To do: develop wireframe ...
+            graphical_object = Wireframe(name, coordinates)
+
         self.data_submitted.emit(graphical_object)
         super().accept()
     

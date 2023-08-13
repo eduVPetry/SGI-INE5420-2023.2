@@ -211,7 +211,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.table_widget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(graphical_object.type))
         self.table_widget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(graphical_object.name))
         self.row_data.append(graphical_object)  # Store the data
-        print(self.row_data[0].__dict__)
+        print(self.row_data[-1].__dict__)
 
     def remove_button_clicked(self):
         ...

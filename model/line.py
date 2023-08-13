@@ -1,4 +1,4 @@
-from graphical_object import GraphicalObject
+from model.graphical_object import GraphicalObject
 
 
 class Line(GraphicalObject):
