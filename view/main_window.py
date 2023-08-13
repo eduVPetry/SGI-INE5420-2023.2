@@ -214,10 +214,15 @@ class MainWindow(QtWidgets.QMainWindow):
         print(self.row_data[-1].__dict__)
 
     def remove_button_clicked(self):
-        ...
+        current_row = self.table_widget.currentRow()
+        if current_row >= 0:
+            self.table_widget.removeRow(current_row)
+            del self.row_data[current_row]
 
     def clear_button_clicked(self):
-        ...
+        self.table_widget.clearContents()
+        self.table_widget.setRowCount(0)
+        self.row_data.clear()
 
     def up_button_clicked(self):
         ...
