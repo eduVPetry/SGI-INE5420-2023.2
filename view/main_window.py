@@ -97,7 +97,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.vertical_layout.addWidget(self.control_label)
 
         # Window control buttons in a grid layout:
-        #   Zoom in,   up, zoom out
+        #   Zoom out,   up, zoom in
         #      left,     , right
         # rot. left, down, rot. right
 
@@ -184,9 +184,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.vertical_layout_2.addWidget(self.viewport_widget)
 
         # Text console for debugging
-        self.text_console = QtWidgets.QTextBrowser(self.right_widget)
-        self.text_console.setObjectName("textConsole")
-        self.vertical_layout_2.addWidget(self.text_console)
+        self.debug_console = QtWidgets.QPlainTextEdit(self.right_widget)
+        self.debug_console.setReadOnly(True)
+        self.debug_console.setObjectName("textConsole")
+        self.vertical_layout_2.addWidget(self.debug_console)
 
         # Top-level horizontal layout
         self.horizontal_layout_2 = QtWidgets.QHBoxLayout(self.centralWidget)
@@ -210,19 +211,27 @@ class MainWindow(QtWidgets.QMainWindow):
         self.table_widget.insertRow(row_position)
         self.table_widget.setItem(row_position, 0, QtWidgets.QTableWidgetItem(graphical_object.type))
         self.table_widget.setItem(row_position, 1, QtWidgets.QTableWidgetItem(graphical_object.name))
-        self.row_data.append(graphical_object)  # Store the data
-        print(self.row_data[-1].__dict__)
+        self.row_data.append(graphical_object)
+        debug_message = (
+            f"{graphical_object.type} has been added to the table at index {row_position}.\n"
+            f"Coordinates: {graphical_object.coordinates}."
+        )
+        self.show_debug_message(debug_message)
 
     def remove_button_clicked(self):
         current_row = self.table_widget.currentRow()
         if current_row >= 0:
             self.table_widget.removeRow(current_row)
             del self.row_data[current_row]
+            self.show_debug_message(f"Removed row of index {current_row} from the table.")
+        else:
+            self.show_debug_message("There is no row selected to be removed from the table.")
 
     def clear_button_clicked(self):
         self.table_widget.clearContents()
         self.table_widget.setRowCount(0)
         self.row_data.clear()
+        self.show_debug_message("Table has been cleared.")
 
     def up_button_clicked(self):
         ...
@@ -247,3 +256,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def rotate_right_button_clicked(self):
         ...
+
+    def show_debug_message(self, debug_message):
+        self.debug_console.appendPlainText(debug_message)
