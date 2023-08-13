@@ -118,33 +118,33 @@ class Dialog(QtWidgets.QDialog):
         self.label_10.setObjectName("label_10")
 
         # Plain text inputs
-        self.plain_text_edit = QtWidgets.QPlainTextEdit(self)
-        self.plain_text_edit.setGeometry(QtCore.QRect(30, 30, 191, 31))
-        self.plain_text_edit.setObjectName("plainTextEdit")
+        self.plain_text_input = QtWidgets.QLineEdit(self)
+        self.plain_text_input.setGeometry(QtCore.QRect(30, 30, 191, 31))
+        self.plain_text_input.setObjectName("plainTextEdit")
 
-        self.plain_text_edit_2 = QtWidgets.QPlainTextEdit(self.tab)
-        self.plain_text_edit_2.setGeometry(QtCore.QRect(80, 80, 111, 31))
-        self.plain_text_edit_2.setObjectName("plainTextEdit_2")
+        self.plain_text_input_2 = QtWidgets.QLineEdit(self.tab)
+        self.plain_text_input_2.setGeometry(QtCore.QRect(80, 80, 111, 31))
+        self.plain_text_input_2.setObjectName("plainTextEdit_2")
 
-        self.plain_text_edit_3 = QtWidgets.QPlainTextEdit(self.tab)
-        self.plain_text_edit_3.setGeometry(QtCore.QRect(250, 80, 111, 31))
-        self.plain_text_edit_3.setObjectName("plainTextEdit_3")
+        self.plain_text_input_3 = QtWidgets.QLineEdit(self.tab)
+        self.plain_text_input_3.setGeometry(QtCore.QRect(250, 80, 111, 31))
+        self.plain_text_input_3.setObjectName("plainTextEdit_3")
 
-        self.plain_text_edit_4 = QtWidgets.QPlainTextEdit(self.tab_2)
-        self.plain_text_edit_4.setGeometry(QtCore.QRect(240, 70, 111, 31))
-        self.plain_text_edit_4.setObjectName("plainTextEdit_4")
+        self.plain_text_input_4 = QtWidgets.QLineEdit(self.tab_2)
+        self.plain_text_input_4.setGeometry(QtCore.QRect(240, 70, 111, 31))
+        self.plain_text_input_4.setObjectName("plainTextEdit_4")
 
-        self.plain_text_edit_5 = QtWidgets.QPlainTextEdit(self.tab_2)
-        self.plain_text_edit_5.setGeometry(QtCore.QRect(70, 70, 111, 31))
-        self.plain_text_edit_5.setObjectName("plainTextEdit_5")
+        self.plain_text_input_5 = QtWidgets.QLineEdit(self.tab_2)
+        self.plain_text_input_5.setGeometry(QtCore.QRect(70, 70, 111, 31))
+        self.plain_text_input_5.setObjectName("plainTextEdit_5")
 
-        self.plain_text_edit_6 = QtWidgets.QPlainTextEdit(self.tab_2)
-        self.plain_text_edit_6.setGeometry(QtCore.QRect(240, 190, 111, 31))
-        self.plain_text_edit_6.setObjectName("plainTextEdit_6")
+        self.plain_text_input_6 = QtWidgets.QLineEdit(self.tab_2)
+        self.plain_text_input_6.setGeometry(QtCore.QRect(240, 190, 111, 31))
+        self.plain_text_input_6.setObjectName("plainTextEdit_6")
 
-        self.plain_text_edit_7 = QtWidgets.QPlainTextEdit(self.tab_2)
-        self.plain_text_edit_7.setGeometry(QtCore.QRect(70, 190, 111, 31))
-        self.plain_text_edit_7.setObjectName("plainTextEdit_7")
+        self.plain_text_input_7 = QtWidgets.QLineEdit(self.tab_2)
+        self.plain_text_input_7.setGeometry(QtCore.QRect(70, 190, 111, 31))
+        self.plain_text_input_7.setObjectName("plainTextEdit_7")
 
         QtCore.QMetaObject.connectSlotsByName(self)
 

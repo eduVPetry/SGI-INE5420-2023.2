@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from dialog import Dialog
+from view.dialog import Dialog
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -201,6 +201,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def add_button_clicked(self):
         dialog = Dialog()
         dialog.exec()
+    
+    def add_row(self):
+        ...
 
     def remove_button_clicked(self):
         ...
