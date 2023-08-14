@@ -35,15 +35,9 @@ class InputDialog(QtWidgets.QDialog):
         self.tab_2.setObjectName("tab_2")
         self.tab_3.setObjectName("tab_3")
 
-        self.tab_widget.addTab(self.tab, "")
-        self.tab_widget.addTab(self.tab_2, "")
-        self.tab_widget.addTab(self.tab_3, "")
-
-        self.tab_widget.setTabText(0, "Point")
-        self.tab_widget.setTabText(1, "Line")
-        self.tab_widget.setTabText(2, "Wireframe")
-
-        self.tab_widget.setCurrentIndex(0)
+        self.tab_widget.addTab(self.tab, "Point")
+        self.tab_widget.addTab(self.tab_2, "Line")
+        self.tab_widget.addTab(self.tab_3, "Wireframe")
 
         # Ok and Cancel Buttons
         self.button_box = QtWidgets.QDialogButtonBox(self)
