@@ -1,10 +1,14 @@
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
 
+from view.window import Window
+
+
 class DisplayFile(QTableWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.graphical_objects = []
+        # self.window = Window()
         self.init_ui()
 
     def init_ui(self):
@@ -19,9 +23,30 @@ class DisplayFile(QTableWidget):
         self.setItem(row_position, 1, QTableWidgetItem(graphical_object.name))
         self.graphical_objects.append(graphical_object)
 
-        main_window = self.parent().parent().parent()
-        debug_message = (
-            f"{graphical_object.type} has been added to the table at index {row_position}.\n"
-            f"Coordinates: {graphical_object.coordinates}."
-        )
+        main_window = self.window()
+        main_window.viewport.update()  # Trigger viewport.paintEvent
+        debug_message = f"{graphical_object.type} has been added to the display file and drawn to the viewport."
         main_window.debug_console.show_debug_message(debug_message)
+
+    def removeCurrentRow(self):
+        main_window = self.window()
+        current_row = self.currentRow()
+        if current_row >= 0:
+            self.removeRow(current_row)
+            object_type = self.graphical_objects[current_row].type
+            del self.graphical_objects[current_row]
+            main_window.viewport.clear()
+            main_window.viewport.update()  # Trigger viewport.paintEvent
+            debug_message = f"{object_type} has been removed from the display file and erased from the viewport."
+        else:
+            debug_message = "There is no object currently selected."
+        main_window.debug_console.show_debug_message(debug_message)
+
+    def clear(self):
+        self.clearContents()
+        self.setRowCount(0)
+        self.graphical_objects.clear()
+
+        main_window = self.window()
+        main_window.viewport.clear()
+        main_window.debug_console.show_debug_message("Display file has been cleared and all objects were erased.")

@@ -14,7 +14,5 @@ class AddButton(QPushButton):
         self.clicked.connect(self.clicked_callback)
 
     def clicked_callback(self):
-        main_window = self.parent().parent().parent()
-        dialog = InputDialog(main_window)
-        dialog.data_submitted.connect(main_window.display_file.add)
+        dialog = InputDialog(self.window())
         dialog.exec()

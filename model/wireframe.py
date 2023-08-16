@@ -1,6 +1,11 @@
-from model.graphical_object import GraphicalObject
+from typing import List
+
+from model.point import Point
 
 
-class Wireframe(GraphicalObject):
-    def __init__(self, name, coordinates):
-        super().__init__(name, "Wireframe", coordinates)
+class Wireframe:
+
+    def __init__(self, coordinates: List[Point], name: str):
+        self.coordinates = coordinates
+        self.name = name
+        self.type = "Wireframe"

@@ -1,7 +1,5 @@
-import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from model.graphical_object import GraphicalObject
 from model.point import Point
 from model.line import Line
 from model.wireframe import Wireframe
@@ -9,7 +7,6 @@ from view.label import Label
 
 
 class InputDialog(QtWidgets.QDialog):
-    data_submitted = QtCore.pyqtSignal(GraphicalObject)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -33,10 +30,10 @@ class InputDialog(QtWidgets.QDialog):
 
         # Fonts for the labels
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(12)
 
         font_bold = QtGui.QFont()
-        font_bold.setPointSize(10)
+        font_bold.setPointSize(12)
         font_bold.setBold(True)
 
         # Labels
@@ -55,8 +52,8 @@ class InputDialog(QtWidgets.QDialog):
         self.point_label.setGeometry(QtCore.QRect(40, 30, 141, 16))
         self.point_x_label.setGeometry(QtCore.QRect(60, 90, 16, 16))
         self.point_y_label.setGeometry(QtCore.QRect(230, 90, 57, 15))
-        self.line_start_label.setGeometry(QtCore.QRect(30, 10, 91, 31))
-        self.line_end_label.setGeometry(QtCore.QRect(30, 140, 71, 16))
+        self.line_start_label.setGeometry(QtCore.QRect(30, 10, 180, 31))
+        self.line_end_label.setGeometry(QtCore.QRect(30, 140, 175, 16))
         self.line_x1_label.setGeometry(QtCore.QRect(50, 80, 16, 16))
         self.line_y1_label.setGeometry(QtCore.QRect(220, 80, 57, 15))
         self.line_x2_label.setGeometry(QtCore.QRect(50, 200, 16, 16))
@@ -91,35 +88,27 @@ class InputDialog(QtWidgets.QDialog):
 
     def ok_callback(self):
         name = self.name_input.text()
-        coordinates = []
 
         current_index = self.tab_widget.currentIndex()
         if current_index == 0:
             x = float(self.point_x_input.text())
             y = float(self.point_y_input.text())
-            coordinates.append((x, y))
-            graphical_object = Point(name, coordinates)
+            graphical_object = Point(x, y, name)
         elif current_index == 1:
             x1 = float(self.line_x1_input.text())
             y1 = float(self.line_y1_input.text())
-            coordinates.append((x1, y1))
             x2 = float(self.line_x2_input.text())
             y2 = float(self.line_y2_input.text())
-            coordinates.append((x2, y2))
-            graphical_object = Line(name, coordinates)
+            graphical_object = Line(x1, y1, x2, y2, name)
         elif current_index == 2:
             # To do: develop wireframe ...
-            graphical_object = Wireframe(name, coordinates)
+            coordinates = []
+            graphical_object = Wireframe(coordinates, name)
 
-        self.data_submitted.emit(graphical_object)
+        main_window = self.parent()
+        main_window.display_file.add(graphical_object)
+
         super().accept()
-    
+
     def cancel_callback(self):
         super().reject()
-
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    dialog = InputDialog()
-    dialog.show()
-    sys.exit(app.exec())

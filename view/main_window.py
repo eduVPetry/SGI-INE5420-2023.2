@@ -105,4 +105,3 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.setCentralWidget(self.centralWidget)
         QtCore.QMetaObject.connectSlotsByName(self)
-

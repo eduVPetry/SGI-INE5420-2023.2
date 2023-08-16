@@ -12,8 +12,4 @@ class ClearButton(QPushButton):
         self.clicked.connect(self.clicked_callback)
 
     def clicked_callback(self):
-        main_window = self.parent().parent().parent()
-        main_window.display_file.clearContents()
-        main_window.display_file.setRowCount(0)
-        main_window.display_file.graphical_objects.clear()
-        main_window.debug_console.show_debug_message("Table has been cleared.")
+        self.window().display_file.clear()
