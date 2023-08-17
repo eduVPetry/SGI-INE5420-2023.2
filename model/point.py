@@ -1,9 +1,10 @@
+from typing import List
 from PyQt5.QtCore import QPointF
 
+from model.graphical_object import GraphicalObject
 
-class Point(QPointF):
 
-    def __init__(self, x: float, y: float, name: str):
-        super().__init__(x, y)
-        self.name = name
-        self.type = "Point"
+class Point(GraphicalObject):
+
+    def __init__(self, name: str, coordinates: List[QPointF]):
+        super().__init__(name, "Point", coordinates)

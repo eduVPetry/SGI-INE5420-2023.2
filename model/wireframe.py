@@ -1,11 +1,10 @@
 from typing import List
+from PyQt5.QtCore import QPointF
 
-from model.point import Point
+from model.graphical_object import GraphicalObject
 
 
-class Wireframe:
+class Wireframe(GraphicalObject):
 
-    def __init__(self, coordinates: List[Point], name: str):
-        self.coordinates = coordinates
-        self.name = name
-        self.type = "Wireframe"
+    def __init__(self, name: str, coordinates: List[QPointF]):
+        super().__init__(name, "Wireframe", coordinates)

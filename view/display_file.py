@@ -8,7 +8,7 @@ class DisplayFile(QTableWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.graphical_objects = []
-        # self.window = Window()
+        self._window = Window(0, 0, 1200, 600)
         self.init_ui()
 
     def init_ui(self):

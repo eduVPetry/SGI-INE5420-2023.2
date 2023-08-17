@@ -93,17 +93,19 @@ class InputDialog(QtWidgets.QDialog):
         if current_index == 0:
             x = float(self.point_x_input.text())
             y = float(self.point_y_input.text())
-            graphical_object = Point(x, y, name)
+            coordinates = [QtCore.QPointF(x, y)]
+            graphical_object = Point(name, coordinates)
         elif current_index == 1:
             x1 = float(self.line_x1_input.text())
             y1 = float(self.line_y1_input.text())
             x2 = float(self.line_x2_input.text())
             y2 = float(self.line_y2_input.text())
-            graphical_object = Line(x1, y1, x2, y2, name)
+            coordinates = [QtCore.QPointF(x1, y1), QtCore.QPointF(x2, y2)]
+            graphical_object = Line(name, coordinates)
         elif current_index == 2:
             # To do: develop wireframe ...
             coordinates = []
-            graphical_object = Wireframe(coordinates, name)
+            graphical_object = Wireframe(name, coordinates)
 
         main_window = self.parent()
         main_window.display_file.add(graphical_object)
