@@ -1,4 +1,6 @@
 from .debug_console import DebugConsole
+
+
 class Window:
 
     def __init__(self, x_min, y_min, x_max, y_max):

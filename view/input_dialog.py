@@ -109,6 +109,9 @@ class InputDialog(QtWidgets.QDialog):
 
         main_window = self.parent()
         main_window.display_file.add(graphical_object)
+        main_window.viewport.update()  # Trigger viewport.paintEvent
+        debug_message = f"{graphical_object.type} has been added to the display file and drawn to the viewport."
+        main_window.debug_console.show_debug_message(debug_message)
 
         super().accept()
 

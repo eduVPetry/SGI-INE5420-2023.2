@@ -17,7 +17,7 @@ class Viewport(QLabel):
     
     def init_ui(self):
         self.setFixedSize(self.width, self.height)
-        self.clear()
+        self.setStyleSheet("background-color: black;")
         self.show()
     
     def paintEvent(self, event):
@@ -48,9 +48,6 @@ class Viewport(QLabel):
                 p1 = transformed_coordinates[-1]
                 p2 = transformed_coordinates[0]
                 painter.drawLine(p1, p2)
-
-    def clear(self):
-        self.setStyleSheet("background-color: black;")
 
     def viewport_transform(self, point: QPointF) -> QPointF:
         _window = self.window().display_file._window

@@ -12,4 +12,6 @@ class ZoomInButton(QPushButton):
         self.clicked.connect(self.clicked_callback)
 
     def clicked_callback(self):
-        ...
+        main_window = self.window()
+        main_window.display_file._window.zoom_in()
+        main_window.viewport.update()  # Trigger viewport.paintEvent

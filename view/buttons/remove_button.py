@@ -12,4 +12,11 @@ class RemoveButton(QPushButton):
         self.clicked.connect(self.clicked_callback)
 
     def clicked_callback(self):
-        self.window().display_file.removeCurrentRow()
+        main_window = self.window()
+        removed, object_type = self.window().display_file.removeCurrentRow()
+        if removed:
+            main_window.viewport.update()  # Trigger viewport.paintEvent
+            debug_message = f"{object_type} has been removed from the display file and erased from the viewport."
+        else:
+            debug_message = "There is no object currently selected."
+        main_window.debug_console.show_debug_message(debug_message)

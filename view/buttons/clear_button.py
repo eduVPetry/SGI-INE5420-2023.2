@@ -12,4 +12,7 @@ class ClearButton(QPushButton):
         self.clicked.connect(self.clicked_callback)
 
     def clicked_callback(self):
-        self.window().display_file.clear()
+        main_window = self.window()
+        main_window.display_file.clear()
+        main_window.viewport.update()  # Trigger viewport.paintEvent
+        main_window.debug_console.show_debug_message("Display file has been cleared and all objects were erased.")
