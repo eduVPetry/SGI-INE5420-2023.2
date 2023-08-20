@@ -65,9 +65,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.zoom_in_button = ZoomInButton(self.left_widget)
         self.left_button = LeftButton(self.left_widget)
         self.right_button = RightButton(self.left_widget)
-        self.rotate_left_button = RotateLeftButton(self.left_widget)
+        # self.rotate_left_button = RotateLeftButton(self.left_widget)
         self.down_button = DownButton(self.left_widget)
-        self.rotate_right_button = RotateRightButton(self.left_widget)
+        # self.rotate_right_button = RotateRightButton(self.left_widget)
 
         # Layout in the left side of the UI
         self.vertical_layout = QtWidgets.QVBoxLayout(self.left_widget)
@@ -86,9 +86,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.grid_layout.addWidget(self.zoom_in_button, 0, 2, 1, 1)
         self.grid_layout.addWidget(self.left_button, 1, 0, 1, 1)
         self.grid_layout.addWidget(self.right_button, 1, 2, 1, 1)
-        self.grid_layout.addWidget(self.rotate_left_button, 2, 0, 1, 1)
+        # self.grid_layout.addWidget(self.rotate_left_button, 2, 0, 1, 1)
         self.grid_layout.addWidget(self.down_button, 2, 1, 1, 1)
-        self.grid_layout.addWidget(self.rotate_right_button, 2, 2, 1, 1)
+        # self.grid_layout.addWidget(self.rotate_right_button, 2, 2, 1, 1)
         self.vertical_layout.addLayout(self.grid_layout)
 
         # Layout in the right side of the UI
