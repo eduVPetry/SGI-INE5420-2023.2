@@ -76,6 +76,15 @@ class InputDialog(QtWidgets.QDialog):
         self.line_x2_input.setGeometry(QtCore.QRect(70, 190, 111, 31))
         self.line_y2_input.setGeometry(QtCore.QRect(240, 190, 111, 31))
 
+        # Input validator
+        validator = QtGui.QDoubleValidator()
+        self.point_x_input.setValidator(validator)
+        self.point_y_input.setValidator(validator)
+        self.line_x1_input.setValidator(validator)
+        self.line_y1_input.setValidator(validator)
+        self.line_x2_input.setValidator(validator)
+        self.line_y2_input.setValidator(validator)
+
         # Ok and Cancel Buttons
         self.button_box = QtWidgets.QDialogButtonBox(self)
         self.button_box.setGeometry(QtCore.QRect(10, 440, 621, 32))

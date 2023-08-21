@@ -14,7 +14,7 @@ class Viewport(QLabel):
         self.x_max = self.width
         self.y_max = self.height
         self.init_ui()
-    
+
     def init_ui(self):
         self.setFixedSize(self.width, self.height)
         self.setStyleSheet("background-color: black;")
