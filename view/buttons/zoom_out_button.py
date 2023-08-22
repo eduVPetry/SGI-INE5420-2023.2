@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QPushButton
 
 
@@ -8,7 +9,7 @@ class ZoomOutButton(QPushButton):
         self.init_ui()
     
     def init_ui(self):
-        self.setText("-")
+        self.setIcon(QIcon("./view/buttons/icons/zoom-out.svg"))
         self.clicked.connect(self.clicked_callback)
 
     def clicked_callback(self):
