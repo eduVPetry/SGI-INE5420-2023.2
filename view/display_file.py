@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QAbstractItemView, QHeaderView, QTableWidget, QTableWidgetItem
 
 from view.window import Window
 
@@ -15,6 +15,9 @@ class DisplayFile(QTableWidget):
         self.setColumnCount(2)
         self.setHorizontalHeaderItem(0, QTableWidgetItem("Type"))
         self.setHorizontalHeaderItem(1, QTableWidgetItem("Name"))
+        self.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
     def add(self, graphical_object):
         row_position = self.rowCount()

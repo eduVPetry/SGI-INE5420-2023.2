@@ -31,11 +31,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Widget for the layout in the left side of the UI
         self.left_widget = QtWidgets.QWidget(self.centralWidget)
-        self.left_widget.setGeometry(QtCore.QRect(11, 10, 256, 431))
+        self.left_widget.setGeometry(QtCore.QRect(10, 10, 256, 431))
 
         # Widget for the layout in the right side of the UI
         self.right_widget = QtWidgets.QWidget(self.centralWidget)
-        self.right_widget.setGeometry(QtCore.QRect(321, 15, 661, 571))
+        self.right_widget.setGeometry(QtCore.QRect(321, 10, 661, 571))
 
         # Viewport
         self.viewport = Viewport(self.right_widget)

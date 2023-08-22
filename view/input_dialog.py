@@ -25,9 +25,9 @@ class InputDialog(QDialog):
         self.tab_widget = QTabWidget(self)
         self.tab_widget.setGeometry(QRect(30, 80, 571, 331))
 
-        self.point_tab = QWidget()
-        self.line_tab = QWidget()
-        self.wireframe_tab = QWidget()
+        self.point_tab = QWidget(self.tab_widget)
+        self.line_tab = QWidget(self.tab_widget)
+        self.wireframe_tab = QWidget(self.tab_widget)
 
         self.tab_widget.addTab(self.point_tab, "Point")
         self.tab_widget.addTab(self.line_tab, "Line")
