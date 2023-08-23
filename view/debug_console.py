@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QPlainTextEdit
 
+
 class DebugConsole(QPlainTextEdit):
 
     def __init__(self, parent=None):
@@ -8,6 +9,6 @@ class DebugConsole(QPlainTextEdit):
 
     def init_ui(self):
         self.setReadOnly(True)
-    
+
     def show_debug_message(self, debug_message):
         self.appendPlainText(debug_message)

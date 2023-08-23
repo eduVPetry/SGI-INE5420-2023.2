@@ -16,7 +16,7 @@ class InputDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.init_ui()
-    
+
     def init_ui(self):
         self.setWindowTitle("Add Object")
         self.resize(640, 480)
@@ -150,7 +150,7 @@ class InputDialog(QDialog):
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
 
-        file_name, _ = QFileDialog.getOpenFileName(self, "Open Wireframe File", "./wireframe_files", \
+        file_name, _ = QFileDialog.getOpenFileName(self, "Open Wireframe File", "./wireframe_files",
                                                          "CSV Files (*.csv);;All Files (*)", options=options)
 
         if file_name:

@@ -19,7 +19,7 @@ class Viewport(QLabel):
         self.setFixedSize(self.width, self.height)
         self.setStyleSheet("background-color: black;")
         self.show()
-    
+
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.setPen(QPen(QColor("red"), 4))
@@ -52,6 +52,6 @@ class Viewport(QLabel):
     def viewport_transform(self, point: QPointF) -> QPointF:
         _window = self.window().display_file._window
         x_w, y_w = point.x(), point.y()
-        x_v = (x_w - _window.x_min) / _window.width() * self.width 
-        y_v = (1 - (y_w - _window.y_min) / _window.height()) * self.height 
+        x_v = (x_w - _window.x_min) / _window.width() * self.width
+        y_v = (1 - (y_w - _window.y_min) / _window.height()) * self.height
         return QPointF(x_v, y_v)
