@@ -2,6 +2,10 @@
 
 Welcome to our Interactive Graphics System project for the course Computer Graphics (INE5420) at the Federal University of Santa Catarina (UFSC).
 
+### Students Information
+
+[Albano Antônio Mendes](https://github.com/albanoMendes) & [Eduardo Vicente Petry](https://github.com/eduVPetry/)
+
 ## Installation
 
 To run this software, you'll need to have Python 3.x installed. Follow these steps:
@@ -25,9 +29,9 @@ python3 app.py
 
 This will start the Interactive Graphics System application. Follow the on-screen prompts to interact with the system.
 
-## Students
+## Attribution
 
-Albano Antonio Mendes & Eduardo Vicente Petry
+This project uses icons from [Font Awesome](https://fontawesome.com/) which are available under the CC BY 4.0 License.
 
 ## License
 
