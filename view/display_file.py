@@ -34,8 +34,3 @@ class DisplayFile(QTableWidget):
             del self.graphical_objects[current_row]
             return True, object_type
         return False, None
-
-    def clear(self):
-        self.clearContents()
-        self.setRowCount(0)
-        self.graphical_objects.clear()

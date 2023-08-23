@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from view.buttons.add_button import AddButton
-from view.buttons.clear_button import ClearButton
+from view.buttons.transform_button import TransformButton
 from view.buttons.down_button import DownButton
 from view.buttons.left_button import LeftButton
 from view.buttons.remove_button import RemoveButton
@@ -59,7 +59,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Buttons
         self.add_button = AddButton(self.left_widget)
         self.remove_button = RemoveButton(self.left_widget)
-        self.clear_button = ClearButton(self.left_widget)
+        self.transform_button = TransformButton(self.left_widget)
         self.zoom_out_button = ZoomOutButton(self.left_widget)
         self.up_button = UpButton(self.left_widget)
         self.zoom_in_button = ZoomInButton(self.left_widget)
@@ -77,7 +77,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.horizontal_layout = QtWidgets.QHBoxLayout()
         self.horizontal_layout.addWidget(self.add_button)
         self.horizontal_layout.addWidget(self.remove_button)
-        self.horizontal_layout.addWidget(self.clear_button)
+        self.horizontal_layout.addWidget(self.transform_button)
         self.vertical_layout.addLayout(self.horizontal_layout)
         self.vertical_layout.addWidget(self.control_label)
         self.grid_layout = QtWidgets.QGridLayout()
