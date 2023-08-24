@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QPushButton
 
 
-class RemoveButton(QPushButton):
+class RemoveObjectButton(QPushButton):
 
     def __init__(self, parent=None):
         super().__init__(parent)

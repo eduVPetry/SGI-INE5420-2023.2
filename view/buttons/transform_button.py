@@ -14,5 +14,10 @@ class TransformButton(QPushButton):
         self.clicked.connect(self.clicked_callback)
 
     def clicked_callback(self):
-        dialog = TransformDialog(self.window())
-        dialog.exec()
+        main_window = self.window()
+        current_row = main_window.display_file.currentRow()
+        if current_row >= 0:
+            dialog = TransformDialog(current_row, self.window())
+            dialog.exec()
+        else:
+            main_window.debug_console.show_debug_message("There is no object currently selected.")

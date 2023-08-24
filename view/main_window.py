@@ -1,10 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from view.buttons.add_button import AddButton
+from view.buttons.add_object_button import AddObjectButton
 from view.buttons.transform_button import TransformButton
 from view.buttons.down_button import DownButton
 from view.buttons.left_button import LeftButton
-from view.buttons.remove_button import RemoveButton
+from view.buttons.remove_object_button import RemoveObjectButton
 from view.buttons.right_button import RightButton
 from view.buttons.rotate_left_button import RotateLeftButton
 from view.buttons.rotate_right_button import RotateRightButton
@@ -57,8 +57,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.viewport_label = Label("Viewport", font, self.right_widget)
 
         # Buttons
-        self.add_button = AddButton(self.left_widget)
-        self.remove_button = RemoveButton(self.left_widget)
+        self.add_object_button = AddObjectButton(self.left_widget)
+        self.remove_object_button = RemoveObjectButton(self.left_widget)
         self.transform_button = TransformButton(self.left_widget)
         self.zoom_out_button = ZoomOutButton(self.left_widget)
         self.up_button = UpButton(self.left_widget)
@@ -75,8 +75,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.vertical_layout.addWidget(self.table_label)
         self.vertical_layout.addWidget(self.display_file)
         self.horizontal_layout = QtWidgets.QHBoxLayout()
-        self.horizontal_layout.addWidget(self.add_button)
-        self.horizontal_layout.addWidget(self.remove_button)
+        self.horizontal_layout.addWidget(self.add_object_button)
+        self.horizontal_layout.addWidget(self.remove_object_button)
         self.horizontal_layout.addWidget(self.transform_button)
         self.vertical_layout.addLayout(self.horizontal_layout)
         self.vertical_layout.addWidget(self.control_label)
