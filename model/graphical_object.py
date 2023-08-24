@@ -1,5 +1,5 @@
 import numpy as np
-from typing import List
+from typing import List, Tuple
 from PyQt5.QtCore import QPointF
 
 
@@ -10,14 +10,14 @@ class GraphicalObject:
         self.type = type
         self.coordinates = coordinates
 
-    def geometric_center(self) -> QPointF:
+    def geometric_center(self) -> Tuple[float, float]:
         center_x = center_y = 0
         for point in self.coordinates:
             center_x += point.x()
             center_y += point.y()
         center_x /= len(self.coordinates)
         center_y /= len(self.coordinates)
-        return QPointF(center_x, center_y)
+        return center_x, center_y
 
     def apply_transformation(self, transformation_matrix) -> None:
         if not transformation_matrix:

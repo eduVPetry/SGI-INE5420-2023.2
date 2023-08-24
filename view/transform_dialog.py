@@ -16,7 +16,7 @@ class TransformDialog(QDialog):
 
     def __init__(self, object_index, parent=None):
         super().__init__(parent)
-        self.graphical_object = self.parent().display_file[self.object_index]
+        self.graphical_object = self.parent().display_file.graphical_objects[object_index]
         self.transformations: List[np.array] = []
         self.init_ui()
 
