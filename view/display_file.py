@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QAbstractItemView, QHeaderView, QTableWidget, QTableWidgetItem
 
-from view.window import Window
+from model.window import Window
 
 
 class DisplayFile(QTableWidget):
