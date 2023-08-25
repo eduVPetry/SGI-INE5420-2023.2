@@ -1,7 +1,10 @@
 from PyQt5.QtCore import QRect
 from PyQt5.QtWidgets import QPushButton
 
-from model.transformations import translation, rotation_around_center_of_world, natural_dilation
+from model.transformations import (
+    translation, rotation_around_center_of_world, rotation_around_center_of_object,
+    rotation_around_arbitrary_point, natural_dilation
+)
 
 
 class AddTransformationButton(QPushButton):
@@ -16,23 +19,35 @@ class AddTransformationButton(QPushButton):
         self.clicked.connect(self.clicked_callback)
 
     def clicked_callback(self):
-        transform_dialog = self.parent()
-        current_index = transform_dialog.tab_widget.currentIndex()
+        dialog = self.parent()
+        current_index = dialog.tab_widget.currentIndex()
+
         if current_index == 0:  # Translation
-            delta_x = float(transform_dialog.displacement_in_x_input.text())
-            delta_y = float(transform_dialog.displacement_in_y_input.text())
+            delta_x = float(dialog.displacement_in_x_input.text())
+            delta_y = float(dialog.displacement_in_y_input.text())
             transformation_matrix = translation(delta_x, delta_y)
-            transform_dialog.transformations.append(transformation_matrix)
-            transform_dialog.list_widget.addItem(f"Translation: Dx={delta_x} Dy={delta_y}")
+            list_item = f"Translation:\n    Dx={delta_x} Dy={delta_y}"
+
         elif current_index == 1:  # Rotation
-            angle = float(transform_dialog.rotation_angle_input.text())
-            transformation_matrix = rotation_around_center_of_world(angle)
-            transform_dialog.transformations.append(transformation_matrix)
-            transform_dialog.list_widget.addItem(f"Rotation: θ={angle}°")
+            angle = float(dialog.rotation_angle_input.text())
+            list_item = f"Rotation:\n    θ={angle}°"
+
+            if dialog.radio_button.isChecked():
+                transformation_matrix = rotation_around_center_of_world(angle)
+            elif dialog.radio_button_2.isChecked():
+                transformation_matrix = rotation_around_center_of_object(angle)
+            elif dialog.radio_button_3.isChecked():
+                x = float(dialog.point_x_input.text())
+                y = float(dialog.point_y_input.text())
+                transformation_matrix = rotation_around_arbitrary_point(angle, x, y)
+                list_item += f" x={x} y={y}"
+
         elif current_index == 2:  # Dilation
-            scale_x = float(transform_dialog.scaling_in_x_input.text())
-            scale_y = float(transform_dialog.scaling_in_y_input.text())
-            center_x, center_y = transform_dialog.graphical_object.geometric_center()
+            scale_x = float(dialog.scaling_in_x_input.text())
+            scale_y = float(dialog.scaling_in_y_input.text())
+            center_x, center_y = dialog.graphical_object.geometric_center()
             transformation_matrix = natural_dilation(scale_x, scale_y, center_x, center_y)
-            transform_dialog.transformations.append(transformation_matrix)
-            transform_dialog.list_widget.addItem(f"Dilation: Sx={scale_x} Sy={scale_y}")
+            list_item = f"Dilation:\n    Sx={scale_x} Sy={scale_y}"
+
+        dialog.list_widget.addItem(list_item)
+        dialog.transformations.append(transformation_matrix)

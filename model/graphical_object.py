@@ -25,4 +25,5 @@ class GraphicalObject:
         for i, point in enumerate(self.coordinates):
             old_coordinates = np.array([point.x(), point.y(), 1], dtype=float)
             new_coordinates = old_coordinates @ transformation_matrix
-            self.coordinates[i] = QPointF(*new_coordinates)
+            new_x, new_y, _ = new_coordinates
+            self.coordinates[i] = QPointF(new_x, new_y)
