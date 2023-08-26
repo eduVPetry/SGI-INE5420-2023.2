@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QPushButton
 
 
@@ -11,6 +12,7 @@ class RemoveObjectButton(QPushButton):
         self.setText("Remove")
         self.clicked.connect(self.clicked_callback)
 
+    @pyqtSlot()
     def clicked_callback(self):
         main_window = self.window()
         removed, object_type = self.window().display_file.removeCurrentRow()

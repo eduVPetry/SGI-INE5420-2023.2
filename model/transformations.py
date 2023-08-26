@@ -23,4 +23,4 @@ def natural_dilation(scale_x, scale_y, center_x, center_y):
     return np.array([], dtype=float)
 
 def compose(transformation_matrices: List[np.array]):
-    return np.array(reduce(np.matmul, transformation_matrices), dtype=float)
+    return reduce(np.matmul, transformation_matrices, np.identity(3))

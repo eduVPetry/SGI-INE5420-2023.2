@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QPushButton
 
 from view.transform_dialog import TransformDialog
@@ -13,6 +14,7 @@ class TransformButton(QPushButton):
         self.setText("Transform")
         self.clicked.connect(self.clicked_callback)
 
+    @pyqtSlot()
     def clicked_callback(self):
         main_window = self.window()
         current_row = main_window.display_file.currentRow()

@@ -6,5 +6,5 @@ from model.graphical_object import GraphicalObject
 
 class Wireframe(GraphicalObject):
 
-    def __init__(self, name: str, coordinates: List[QPointF]):
-        super().__init__(name, "Wireframe", coordinates)
+    def __init__(self, name: str, coordinates: List[QPointF], color_rgb: int):
+        super().__init__(name, "Wireframe", coordinates, color_rgb)

@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QPushButton
 
 from view.input_dialog import InputDialog
@@ -13,6 +14,7 @@ class AddObjectButton(QPushButton):
         self.setText("Add")
         self.clicked.connect(self.clicked_callback)
 
+    @pyqtSlot()
     def clicked_callback(self):
         dialog = InputDialog(self.window())
         dialog.exec()

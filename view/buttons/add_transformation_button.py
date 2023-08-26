@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QRect
+from PyQt5.QtCore import pyqtSlot, QRect
 from PyQt5.QtWidgets import QPushButton
 
 from model.transformations import (
@@ -18,6 +18,7 @@ class AddTransformationButton(QPushButton):
         self.setGeometry(QRect(430, 28, 201, 25))
         self.clicked.connect(self.clicked_callback)
 
+    @pyqtSlot()
     def clicked_callback(self):
         dialog = self.parent()
         current_index = dialog.tab_widget.currentIndex()
@@ -35,7 +36,8 @@ class AddTransformationButton(QPushButton):
             if dialog.radio_button.isChecked():
                 transformation_matrix = rotation_around_center_of_world(angle)
             elif dialog.radio_button_2.isChecked():
-                transformation_matrix = rotation_around_center_of_object(angle)
+                center_x, center_y = dialog.graphical_object.geometric_center()
+                transformation_matrix = rotation_around_center_of_object(angle, center_x, center_y)
             elif dialog.radio_button_3.isChecked():
                 x = float(dialog.point_x_input.text())
                 y = float(dialog.point_y_input.text())

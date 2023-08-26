@@ -6,5 +6,5 @@ from model.graphical_object import GraphicalObject
 
 class Line(GraphicalObject):
 
-    def __init__(self, name: str, coordinates: List[QPointF]):
-        super().__init__(name, "Line", coordinates)
+    def __init__(self, name: str, coordinates: List[QPointF], color_rgb: int):
+        super().__init__(name, "Line", coordinates, color_rgb)

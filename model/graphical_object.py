@@ -5,10 +5,11 @@ from PyQt5.QtCore import QPointF
 
 class GraphicalObject:
 
-    def __init__(self, name: str, type: str, coordinates: List[QPointF]) -> None:
+    def __init__(self, name: str, type: str, coordinates: List[QPointF], color_rgb: int) -> None:
         self.name = name
         self.type = type
         self.coordinates = coordinates
+        self.color_rgb = color_rgb
 
     def geometric_center(self) -> Tuple[float, float]:
         center_x = center_y = 0
@@ -20,8 +21,6 @@ class GraphicalObject:
         return center_x, center_y
 
     def apply_transformation(self, transformation_matrix) -> None:
-        if not transformation_matrix:
-            return
         for i, point in enumerate(self.coordinates):
             old_coordinates = np.array([point.x(), point.y(), 1], dtype=float)
             new_coordinates = old_coordinates @ transformation_matrix

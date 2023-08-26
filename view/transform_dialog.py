@@ -1,6 +1,7 @@
 from typing import List
 import numpy as np
-from PyQt5 import QtCore, QtGui
+from PyQt5.QtCore import Qt, QMetaObject, QRect
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (
     QDialog, QDialogButtonBox, QFormLayout, QHBoxLayout,
     QLineEdit, QListWidget, QTabWidget, QVBoxLayout, QWidget
@@ -29,7 +30,7 @@ class TransformDialog(QDialog):
 
         # Tabs
         self.tab_widget = QTabWidget(self)
-        self.tab_widget.setGeometry(QtCore.QRect(20, 20, 400, 328))
+        self.tab_widget.setGeometry(QRect(20, 20, 400, 328))
 
         self.translation_tab = QWidget(self.tab_widget)
         self.rotation_tab = QWidget(self.tab_widget)
@@ -46,10 +47,10 @@ class TransformDialog(QDialog):
         self.scaling_input_widget = QWidget(self.dilation_tab)
 
         # Fonts for the labels
-        font = QtGui.QFont()
+        font = QFont()
         font.setPointSize(12)
 
-        font_bold = QtGui.QFont()
+        font_bold = QFont()
         font_bold.setPointSize(12)
         font_bold.setBold(True)
 
@@ -68,9 +69,9 @@ class TransformDialog(QDialog):
 
         self.point_x_label.setVisible(False)
         self.point_y_label.setVisible(False)
-        self.translation_label.setGeometry(QtCore.QRect(30, 40, 111, 16))
-        self.rotation_type_label.setGeometry(QtCore.QRect(20, 160, 361, 21))
-        self.dilation_label.setGeometry(QtCore.QRect(30, 40, 81, 16))
+        self.translation_label.setGeometry(QRect(30, 40, 111, 16))
+        self.rotation_type_label.setGeometry(QRect(20, 160, 361, 21))
+        self.dilation_label.setGeometry(QRect(30, 40, 81, 16))
 
         # Text inputs
         self.displacement_in_x_input = QLineEdit(self.displacement_input_widget)
@@ -95,10 +96,10 @@ class TransformDialog(QDialog):
 
         # List widget
         self.list_widget = QListWidget(self)
-        self.list_widget.setGeometry(QtCore.QRect(430, 90, 201, 211))
+        self.list_widget.setGeometry(QRect(430, 90, 201, 211))
 
         # Layout
-        self.displacement_input_widget.setGeometry(QtCore.QRect(50, 80, 200, 58))
+        self.displacement_input_widget.setGeometry(QRect(50, 80, 200, 58))
         self.verticalLayout_3 = QVBoxLayout(self.displacement_input_widget)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_4 = QHBoxLayout()
@@ -109,16 +110,16 @@ class TransformDialog(QDialog):
         self.horizontalLayout_5.addWidget(self.displacement_in_y_label)
         self.horizontalLayout_5.addWidget(self.displacement_in_y_input)
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
-        self.rotation_options_widget.setGeometry(QtCore.QRect(30, 30, 295, 102))
+        self.rotation_options_widget.setGeometry(QRect(30, 30, 295, 102))
         self.verticalLayout = QVBoxLayout(self.rotation_options_widget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.addWidget(self.options_label)
         self.verticalLayout.addWidget(self.radio_button)
         self.verticalLayout.addWidget(self.radio_button_2)
         self.verticalLayout.addWidget(self.radio_button_3)
-        self.rotation_input_widget.setGeometry(QtCore.QRect(50, 190, 256, 102))
+        self.rotation_input_widget.setGeometry(QRect(50, 190, 256, 102))
         self.formLayout = QFormLayout(self.rotation_input_widget)
-        self.formLayout.setLabelAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.formLayout.setLabelAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
         self.formLayout.setContentsMargins(0, 0, 0, 0)
         self.formLayout.setSpacing(3)
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.rotation_angle_label)
@@ -127,7 +128,7 @@ class TransformDialog(QDialog):
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.rotation_angle_input)
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.point_x_input)
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.point_y_input)
-        self.scaling_input_widget.setGeometry(QtCore.QRect(50, 80, 192, 58))
+        self.scaling_input_widget.setGeometry(QRect(50, 80, 192, 58))
         self.verticalLayout_2 = QVBoxLayout(self.scaling_input_widget)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2 = QHBoxLayout()
@@ -141,17 +142,18 @@ class TransformDialog(QDialog):
 
         # Ok and Cancel Buttons
         self.buttonBox = QDialogButtonBox(self)
-        self.buttonBox.setGeometry(QtCore.QRect(10, 310, 621, 32))
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
+        self.buttonBox.setGeometry(QRect(10, 310, 621, 32))
+        self.buttonBox.setOrientation(Qt.Horizontal)
         self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
 
-        QtCore.QMetaObject.connectSlotsByName(self)
+        QMetaObject.connectSlotsByName(self)
 
     def accept(self):
         transformation_matrix = compose(self.transformations)
         self.graphical_object.apply_transformation(transformation_matrix)
+        self.parent().viewport.update()  # Trigger viewport.paintEvent
 
         super().accept()
 

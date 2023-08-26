@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QRect
+from PyQt5.QtCore import pyqtSlot, QRect
 from PyQt5.QtWidgets import QPushButton
 
 
@@ -13,6 +13,7 @@ class RemoveTransformationButton(QPushButton):
         self.setGeometry(QRect(430, 59, 201, 25))
         self.clicked.connect(self.clicked_callback)
 
+    @pyqtSlot()
     def clicked_callback(self):
         transform_dialog = self.parent()
         current_row = transform_dialog.list_widget.currentRow()

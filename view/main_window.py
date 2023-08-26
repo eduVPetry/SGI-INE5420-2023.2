@@ -1,4 +1,6 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QMetaObject, QRect
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QGridLayout, QHBoxLayout, QMainWindow, QVBoxLayout, QWidget
 
 from view.buttons.add_object_button import AddObjectButton
 from view.buttons.transform_button import TransformButton
@@ -18,7 +20,7 @@ from view.display_file import DisplayFile
 from view.viewport import Viewport
 
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -27,15 +29,15 @@ class MainWindow(QtWidgets.QMainWindow):
     def init_ui(self):
         self.setWindowTitle("Sistema Gráfico Interativo")
         self.resize(1600, 800)
-        self.centralWidget = QtWidgets.QWidget(self)
+        self.centralWidget = QWidget(self)
 
         # Widget for the layout in the left side of the UI
-        self.left_widget = QtWidgets.QWidget(self.centralWidget)
-        self.left_widget.setGeometry(QtCore.QRect(10, 10, 256, 431))
+        self.left_widget = QWidget(self.centralWidget)
+        self.left_widget.setGeometry(QRect(10, 10, 256, 431))
 
         # Widget for the layout in the right side of the UI
-        self.right_widget = QtWidgets.QWidget(self.centralWidget)
-        self.right_widget.setGeometry(QtCore.QRect(321, 10, 661, 571))
+        self.right_widget = QWidget(self.centralWidget)
+        self.right_widget.setGeometry(QRect(321, 10, 661, 571))
 
         # Viewport
         self.viewport = Viewport(self.right_widget)
@@ -47,7 +49,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.debug_console = DebugConsole(self.right_widget)
 
         # Font for the labels
-        font = QtGui.QFont()
+        font = QFont()
         font.setPointSize(12)
         font.setBold(True)
 
@@ -70,17 +72,17 @@ class MainWindow(QtWidgets.QMainWindow):
         # self.rotate_right_button = RotateRightButton(self.left_widget)
 
         # Layout in the left side of the UI
-        self.vertical_layout = QtWidgets.QVBoxLayout(self.left_widget)
+        self.vertical_layout = QVBoxLayout(self.left_widget)
         self.vertical_layout.setContentsMargins(0, 0, 0, 0)
         self.vertical_layout.addWidget(self.table_label)
         self.vertical_layout.addWidget(self.display_file)
-        self.horizontal_layout = QtWidgets.QHBoxLayout()
+        self.horizontal_layout = QHBoxLayout()
         self.horizontal_layout.addWidget(self.add_object_button)
         self.horizontal_layout.addWidget(self.remove_object_button)
         self.horizontal_layout.addWidget(self.transform_button)
         self.vertical_layout.addLayout(self.horizontal_layout)
         self.vertical_layout.addWidget(self.control_label)
-        self.grid_layout = QtWidgets.QGridLayout()
+        self.grid_layout = QGridLayout()
         self.grid_layout.addWidget(self.zoom_out_button, 0, 0, 1, 1)
         self.grid_layout.addWidget(self.up_button, 0, 1, 1, 1)
         self.grid_layout.addWidget(self.zoom_in_button, 0, 2, 1, 1)
@@ -92,16 +94,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.vertical_layout.addLayout(self.grid_layout)
 
         # Layout in the right side of the UI
-        self.vertical_layout_2 = QtWidgets.QVBoxLayout(self.right_widget)
+        self.vertical_layout_2 = QVBoxLayout(self.right_widget)
         self.vertical_layout_2.setContentsMargins(0, 0, 0, 0)
         self.vertical_layout_2.addWidget(self.viewport_label)
         self.vertical_layout_2.addWidget(self.viewport)
         self.vertical_layout_2.addWidget(self.debug_console)
 
         # Top-level layout
-        self.horizontal_layout_2 = QtWidgets.QHBoxLayout(self.centralWidget)
+        self.horizontal_layout_2 = QHBoxLayout(self.centralWidget)
         self.horizontal_layout_2.addWidget(self.left_widget)
         self.horizontal_layout_2.addWidget(self.right_widget)
 
         self.setCentralWidget(self.centralWidget)
-        QtCore.QMetaObject.connectSlotsByName(self)
+        QMetaObject.connectSlotsByName(self)

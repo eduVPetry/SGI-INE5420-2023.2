@@ -22,11 +22,12 @@ class Viewport(QLabel):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setPen(QPen(QColor("red"), 4))
-
         display_file = self.window().display_file
 
         for graphical_object in display_file.graphical_objects:
+            # Set color and width for painting
+            painter.setPen(QPen(QColor.fromRgb(graphical_object.color_rgb), 4))
+
             # Apply viewport transform
             transformed_coordinates = []
             for point in graphical_object.coordinates:

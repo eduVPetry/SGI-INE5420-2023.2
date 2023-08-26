@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt, QPointF, QRect, QMetaObject
+from PyQt5.QtCore import pyqtSlot, Qt, QPointF, QRect, QMetaObject
 from PyQt5.QtGui import QDoubleValidator, QFont
 from PyQt5.QtWidgets import (
     QDialog, QDialogButtonBox, QFileDialog, QLineEdit, QPushButton,
@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import (
 from model.point import Point
 from model.line import Line
 from model.wireframe import Wireframe
+from view.buttons.color_picker_button import ColorPickerButton
 from view.label import Label
 
 
@@ -19,11 +20,11 @@ class InputDialog(QDialog):
 
     def init_ui(self):
         self.setWindowTitle("Add Object")
-        self.resize(640, 480)
+        self.resize(470, 410)
 
         # Tabs
         self.tab_widget = QTabWidget(self)
-        self.tab_widget.setGeometry(QRect(30, 80, 571, 331))
+        self.tab_widget.setGeometry(QRect(30, 80, 401, 280))
 
         self.point_tab = QWidget(self.tab_widget)
         self.line_tab = QWidget(self.tab_widget)
@@ -90,6 +91,10 @@ class InputDialog(QDialog):
         self.line_x2_input.setValidator(validator)
         self.line_y2_input.setValidator(validator)
 
+        # Color picker
+        self.color_rgb = 0xFFFFFF  # Default: white
+        self.color_picker_button = ColorPickerButton(self)
+
         # Wireframe file selector
         self.text_edit = QTextEdit(self.wireframe_tab)
         self.open_button = QPushButton("Open CSV File", self.wireframe_tab)
@@ -102,7 +107,7 @@ class InputDialog(QDialog):
 
         # Ok and Cancel Buttons
         self.button_box = QDialogButtonBox(self)
-        self.button_box.setGeometry(QRect(10, 440, 621, 32))
+        self.button_box.setGeometry(QRect(10, 370, 450, 32))
         self.button_box.setOrientation(Qt.Horizontal)
         self.button_box.setStandardButtons(QDialogButtonBox.Cancel | QDialogButtonBox.Ok)
         self.button_box.accepted.connect(self.ok_callback)
@@ -118,14 +123,14 @@ class InputDialog(QDialog):
             x = float(self.point_x_input.text())
             y = float(self.point_y_input.text())
             coordinates = [QPointF(x, y)]
-            graphical_object = Point(name, coordinates)
+            graphical_object = Point(name, coordinates, self.color_rgb)
         elif current_index == 1:  # Line
             x1 = float(self.line_x1_input.text())
             y1 = float(self.line_y1_input.text())
             x2 = float(self.line_x2_input.text())
             y2 = float(self.line_y2_input.text())
             coordinates = [QPointF(x1, y1), QPointF(x2, y2)]
-            graphical_object = Line(name, coordinates)
+            graphical_object = Line(name, coordinates, self.color_rgb)
         elif current_index == 2:  # Wireframe
             coordinates = []
             wireframe_data = self.text_edit.toPlainText()
@@ -133,7 +138,7 @@ class InputDialog(QDialog):
             for i in range(1, len(lines)):
                 x, y = map(float, lines[i].split(","))
                 coordinates.append(QPointF(x, y))
-            graphical_object = Wireframe(name, coordinates)
+            graphical_object = Wireframe(name, coordinates, self.color_rgb)
 
         main_window = self.parent()
         main_window.display_file.add(graphical_object)
@@ -146,6 +151,7 @@ class InputDialog(QDialog):
     def cancel_callback(self):
         super().reject()
 
+    @pyqtSlot()
     def open_file(self):
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly

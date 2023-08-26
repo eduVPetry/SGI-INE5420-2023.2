@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QPushButton
 
 
@@ -11,5 +12,6 @@ class RotateRightButton(QPushButton):
         self.setText("rot. right")
         self.clicked.connect(self.clicked_callback)
 
+    @pyqtSlot()
     def clicked_callback(self):
         ...
