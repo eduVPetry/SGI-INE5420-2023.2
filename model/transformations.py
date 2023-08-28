@@ -28,7 +28,7 @@ def dilation(scale_x, scale_y):
 def natural_dilation(scale_x, scale_y, center_x, center_y):
     a = np.matmul([scale_x, scale_y, 1], [[1, 0, 0], [0, 1, 0], [-center_x, -center_y, 1]])
     b = np.matmult([[scale_x, 0, 0], [0, scale_y, 0], [0, 0, 1]],
-                   [[1, 0, 0], [0, 1, 0], [scale_x, scale_y, 1]])
+                   [[1, 0, 0], [0, 1, 0], [center_x, center_y, 1]])
     result = np.matmul(a, b)
     return np.array(result, dtype=float)
 
