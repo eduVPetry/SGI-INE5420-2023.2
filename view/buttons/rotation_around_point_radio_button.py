@@ -12,7 +12,7 @@ class RotationAroundPointRadioButton(QRadioButton):
         self.setText("Rotation around an arbitrary point")
         self.toggled.connect(self.toggled_callback)
 
-    @pyqtSlot()
+    @pyqtSlot(bool)
     def toggled_callback(self, checked):
         transform_dialog = self.window()
 

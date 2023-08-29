@@ -12,7 +12,7 @@ class RotationAroundObjectRadioButton(QRadioButton):
         self.setText("Rotation around the center of the object")
         self.toggled.connect(self.toggled_callback)
 
-    @pyqtSlot()
+    @pyqtSlot(bool)
     def toggled_callback(self, checked):
         transform_dialog = self.window()
 
