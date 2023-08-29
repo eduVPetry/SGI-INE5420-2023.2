@@ -1,7 +1,7 @@
 from typing import List
 import numpy as np
 from PyQt5.QtCore import Qt, QMetaObject, QRect
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QDoubleValidator, QFont
 from PyQt5.QtWidgets import (
     QDialog, QDialogButtonBox, QFormLayout, QHBoxLayout,
     QLineEdit, QListWidget, QTabWidget, QVBoxLayout, QWidget
@@ -85,6 +85,11 @@ class TransformDialog(QDialog):
         self.point_x_input.setVisible(False)
         self.point_y_input.setVisible(False)
 
+        # Input validator
+        validator = QDoubleValidator()
+        for input_widget in self.get_input_widgets():
+            input_widget.setValidator(validator)
+
         # Radio Buttons
         self.radio_button = RotationAroundWorldRadioButton(self.rotation_options_widget)
         self.radio_button_2 = RotationAroundObjectRadioButton(self.rotation_options_widget)
@@ -160,11 +165,19 @@ class TransformDialog(QDialog):
     def reject(self):
         super().reject()
 
-    def clear_inputs(self):
-        self.displacement_in_x_input.clear()
-        self.displacement_in_y_input.clear()
-        self.rotation_angle_input.clear()
-        self.point_x_input.clear()
-        self.point_y_input.clear()
-        self.scaling_in_x_input.clear()
-        self.scaling_in_y_input.clear()
+    def get_input_widgets(self):
+        widget_containers = [
+            self.displacement_input_widget,
+            self.rotation_input_widget,
+            self.scaling_input_widget
+        ]
+
+        input_widgets = []
+        for container in widget_containers:
+            for child in container.findChildren(QLineEdit):
+                input_widgets.append(child)
+        return input_widgets
+
+    def clear_input_widgets(self):
+        for input_widget in self.get_input_widgets():
+            input_widget.clear()
