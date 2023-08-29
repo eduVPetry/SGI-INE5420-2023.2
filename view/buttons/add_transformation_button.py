@@ -51,5 +51,6 @@ class AddTransformationButton(QPushButton):
             transformation_matrix = natural_dilation(scale_x, scale_y, center_x, center_y)
             list_item = f"Dilation:\n    Sx={scale_x} Sy={scale_y}"
 
+        dialog.clear_inputs()
         dialog.list_widget.addItem(list_item)
         dialog.transformations.append(transformation_matrix)

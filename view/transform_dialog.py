@@ -159,3 +159,12 @@ class TransformDialog(QDialog):
 
     def reject(self):
         super().reject()
+
+    def clear_inputs(self):
+        self.displacement_in_x_input.clear()
+        self.displacement_in_y_input.clear()
+        self.rotation_angle_input.clear()
+        self.point_x_input.clear()
+        self.point_y_input.clear()
+        self.scaling_in_x_input.clear()
+        self.scaling_in_y_input.clear()

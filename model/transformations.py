@@ -11,8 +11,8 @@ def translation(delta_x, delta_y):
 
 def rotation_around_center_of_world(angle):
     angle = radians(angle)
-    return np.array([[ cos(angle), sin(angle), 0],
-                     [-sin(angle), cos(angle), 0],
+    return np.array([[cos(angle), -sin(angle), 0],
+                     [sin(angle),  cos(angle), 0],
                      [         0,           0, 1]], dtype=float)
 
 def rotation_around_center_of_object(angle, center_x, center_y):
