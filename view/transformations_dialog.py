@@ -16,7 +16,7 @@ from view.buttons.rotation_around_world_radio_button import RotationAroundWorldR
 from view.label import Label
 
 
-class TransformDialog(QDialog):
+class TransformationsDialog(QDialog):
 
     def __init__(self, object_index, parent=None):
         super().__init__(parent)
@@ -157,7 +157,7 @@ class TransformDialog(QDialog):
 
     def accept(self):
         transformation_matrix = compose(self.transformations)
-        self.graphical_object.apply_transformation(transformation_matrix)
+        self.graphical_object.transform(transformation_matrix)
         self.parent().viewport.update()  # Trigger viewport.paintEvent
 
         super().accept()

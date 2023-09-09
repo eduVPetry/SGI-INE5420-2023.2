@@ -17,7 +17,7 @@ from view.buttons.zoom_out_button import ZoomOutButton
 from view.debug_console import DebugConsole
 from view.label import Label
 from view.display_file import DisplayFile
-from view.viewport import Viewport
+from view.viewport_widget import ViewportWidget
 
 
 class MainWindow(QMainWindow):
@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
-        self.setWindowTitle("Sistema Gráfico Interativo")
+        self.setWindowTitle("Interactive Graphics System")
         self.resize(1600, 800)
         self.centralWidget = QWidget(self)
 
@@ -40,7 +40,7 @@ class MainWindow(QMainWindow):
         self.right_widget.setGeometry(QRect(321, 10, 661, 571))
 
         # Viewport
-        self.viewport = Viewport(self.right_widget)
+        self.viewport = ViewportWidget(1200, 600, self.right_widget)
 
         # Display file table (type, name)
         self.display_file = DisplayFile(self.left_widget)
@@ -67,9 +67,9 @@ class MainWindow(QMainWindow):
         self.zoom_in_button = ZoomInButton(self.left_widget)
         self.left_button = LeftButton(self.left_widget)
         self.right_button = RightButton(self.left_widget)
-        # self.rotate_left_button = RotateLeftButton(self.left_widget)
+        self.rotate_left_button = RotateLeftButton(self.left_widget)
         self.down_button = DownButton(self.left_widget)
-        # self.rotate_right_button = RotateRightButton(self.left_widget)
+        self.rotate_right_button = RotateRightButton(self.left_widget)
 
         # Layout in the left side of the UI
         self.vertical_layout = QVBoxLayout(self.left_widget)
@@ -88,9 +88,9 @@ class MainWindow(QMainWindow):
         self.grid_layout.addWidget(self.zoom_in_button, 0, 2, 1, 1)
         self.grid_layout.addWidget(self.left_button, 1, 0, 1, 1)
         self.grid_layout.addWidget(self.right_button, 1, 2, 1, 1)
-        # self.grid_layout.addWidget(self.rotate_left_button, 2, 0, 1, 1)
+        self.grid_layout.addWidget(self.rotate_left_button, 2, 0, 1, 1)
         self.grid_layout.addWidget(self.down_button, 2, 1, 1, 1)
-        # self.grid_layout.addWidget(self.rotate_right_button, 2, 2, 1, 1)
+        self.grid_layout.addWidget(self.rotate_right_button, 2, 2, 1, 1)
         self.vertical_layout.addLayout(self.grid_layout)
 
         # Layout in the right side of the UI

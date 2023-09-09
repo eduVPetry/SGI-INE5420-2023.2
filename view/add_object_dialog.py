@@ -1,4 +1,4 @@
-from PyQt5.QtCore import pyqtSlot, Qt, QPointF, QRect, QMetaObject
+from PyQt5.QtCore import pyqtSlot, Qt, QRect, QMetaObject
 from PyQt5.QtGui import QDoubleValidator, QFont
 from PyQt5.QtWidgets import (
     QDialog, QDialogButtonBox, QFileDialog, QLineEdit, QPushButton,
@@ -12,7 +12,7 @@ from view.buttons.color_picker_button import ColorPickerButton
 from view.label import Label
 
 
-class InputDialog(QDialog):
+class AddObjectDialog(QDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -122,23 +122,23 @@ class InputDialog(QDialog):
         if current_index == 0:  # Point
             x = float(self.point_x_input.text())
             y = float(self.point_y_input.text())
-            coordinates = [QPointF(x, y)]
-            graphical_object = Point(name, coordinates, self.color_rgb)
+            coordinates = [(x, y)]
+            graphical_object = Point(name, self.color_rgb, coordinates)
         elif current_index == 1:  # Line
             x1 = float(self.line_x1_input.text())
             y1 = float(self.line_y1_input.text())
             x2 = float(self.line_x2_input.text())
             y2 = float(self.line_y2_input.text())
-            coordinates = [QPointF(x1, y1), QPointF(x2, y2)]
-            graphical_object = Line(name, coordinates, self.color_rgb)
+            coordinates = [(x1, y1), (x2, y2)]
+            graphical_object = Line(name, self.color_rgb, coordinates)
         elif current_index == 2:  # Wireframe
             coordinates = []
             wireframe_data = self.text_edit.toPlainText()
             lines = wireframe_data.strip().split("\n")
             for i in range(1, len(lines)):
                 x, y = map(float, lines[i].split(","))
-                coordinates.append(QPointF(x, y))
-            graphical_object = Wireframe(name, coordinates, self.color_rgb)
+                coordinates.append((x, y))
+            graphical_object = Wireframe(name, self.color_rgb, coordinates)
 
         main_window = self.parent()
         main_window.display_file.add(graphical_object)

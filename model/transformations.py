@@ -1,8 +1,21 @@
 from functools import reduce
 from math import cos, sin, radians
-from typing import List
+from typing import List, Tuple
 import numpy as np
+from PyQt5.QtCore import QPointF
 
+
+def viewport_transformation(_viewport) -> QPointF:
+    _translation = translation(1, -1)
+    _dilation = dilation(_viewport.width/2, -_viewport.height/2)
+    return compose([_translation, _dilation])
+
+def normalization(_window):
+    w_cx, w_cy = _window.center()
+    _translation = translation(-w_cx, -w_cy)
+    rotation = rotation_around_center_of_world(-_window.viewup_angle)
+    _dilation = dilation(2/_window.width(), 2/_window.height())
+    return compose([_translation, rotation, _dilation])
 
 def translation(delta_x, delta_y):
     return np.array([[      1,       0, 0],
@@ -37,3 +50,12 @@ def natural_dilation(scale_x, scale_y, center_x, center_y):
 
 def compose(transformation_matrices: List[np.array]):
     return reduce(np.matmul, transformation_matrices, np.identity(3))
+
+def transform(transformation_matrix: np.array, world_coordinates: Tuple[float, float]) -> Tuple[float, float]:
+    transformed_coordinates = []
+    for x, y in world_coordinates:
+        old_coordinates = np.array([x, y, 1], dtype=float)
+        new_coordinates = old_coordinates @ transformation_matrix
+        new_x, new_y, _ = new_coordinates
+        transformed_coordinates.append((new_x, new_y))
+    return transformed_coordinates

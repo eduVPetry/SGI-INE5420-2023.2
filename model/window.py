@@ -5,9 +5,11 @@ class Window:
         self.y_min = y_min
         self.x_max = x_max
         self.y_max = y_max
+        self.viewup_angle = 0  # degrees
 
         self.PAN_FACTOR = 0.1
         self.ZOOM_FACTOR = 1.1
+        self.ROTATION_ANGLE_ABSOLUTE = 30  # degrees
 
     def width(self):
         return self.x_max - self.x_min
@@ -55,3 +57,9 @@ class Window:
         self.x_max += half_width * (self.ZOOM_FACTOR - 1)
         self.y_min -= half_height * (self.ZOOM_FACTOR - 1)
         self.y_max += half_height * (self.ZOOM_FACTOR - 1)
+
+    def rotate_left(self):
+        self.viewup_angle -= self.ROTATION_ANGLE_ABSOLUTE
+
+    def rotate_right(self):
+        self.viewup_angle += self.ROTATION_ANGLE_ABSOLUTE
