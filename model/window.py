@@ -1,3 +1,5 @@
+from math import cos, sin, radians
+
 class Window:
 
     def __init__(self, x_min, y_min, x_max, y_max):
@@ -23,24 +25,29 @@ class Window:
         return x_center, y_center
 
     def pan_up(self):
-        delta_y = self.height() * self.PAN_FACTOR
-        self.y_min += delta_y
-        self.y_max += delta_y
+        d = self.PAN_FACTOR * self.height()
+        dy = d * cos(self.viewup_angle)
+        self.y_min += dy
+        self.y_max += dy
 
     def pan_down(self):
-        delta_y = self.height() * self.PAN_FACTOR
-        self.y_min -= delta_y
-        self.y_max -= delta_y
+        d = self.PAN_FACTOR * self.height()
+        #dx = d * sin(self.viewup_angle)
+        dy = d * cos(self.viewup_angle)
+        self.y_min -= dy
+        self.y_max -= dy
 
     def pan_left(self):
-        delta_x = self.width() * self.PAN_FACTOR
-        self.x_min -= delta_x
-        self.x_max -= delta_x
+        d = self.PAN_FACTOR * self.width()
+        dx = d * sin(self.viewup_angle)
+        self.x_min -= dx
+        self.x_max -= dx
 
     def pan_right(self):
-        delta_x = self.width() * self.PAN_FACTOR
-        self.x_min += delta_x
-        self.x_max += delta_x
+        d = self.PAN_FACTOR * self.width()
+        dx = d * sin(self.viewup_angle)
+        self.x_min += dx
+        self.x_max += dx
 
     def zoom_in(self):
         half_width = self.width() / 2
