@@ -7,11 +7,14 @@ class Window:
         self.y_min = y_min
         self.x_max = x_max
         self.y_max = y_max
+
+        self.x_pan = 0
+        self.y_pan = 0
         self.viewup_angle = 0  # degrees
 
         self.PAN_FACTOR = 0.1
         self.ZOOM_FACTOR = 1.1
-        self.ROTATION_ANGLE_ABSOLUTE = 30  # degrees
+        self.ROTATION_ANGLE_ABSOLUTE = 10  # degrees
 
     def width(self):
         return self.x_max - self.x_min
@@ -25,29 +28,16 @@ class Window:
         return x_center, y_center
 
     def pan_up(self):
-        d = self.PAN_FACTOR * self.height()
-        dy = d * cos(self.viewup_angle)
-        self.y_min += dy
-        self.y_max += dy
+        self.y_pan += self.PAN_FACTOR * self.height()
 
     def pan_down(self):
-        d = self.PAN_FACTOR * self.height()
-        #dx = d * sin(self.viewup_angle)
-        dy = d * cos(self.viewup_angle)
-        self.y_min -= dy
-        self.y_max -= dy
+        self.y_pan -= self.PAN_FACTOR * self.height()
 
     def pan_left(self):
-        d = self.PAN_FACTOR * self.width()
-        dx = d * sin(self.viewup_angle)
-        self.x_min -= dx
-        self.x_max -= dx
+        self.x_pan -= self.PAN_FACTOR * self.width()
 
     def pan_right(self):
-        d = self.PAN_FACTOR * self.width()
-        dx = d * sin(self.viewup_angle)
-        self.x_min += dx
-        self.x_max += dx
+        self.x_pan += self.PAN_FACTOR * self.width()
 
     def zoom_in(self):
         half_width = self.width() / 2

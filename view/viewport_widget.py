@@ -47,3 +47,16 @@ class ViewportWidget(QLabel):
                 point1 = graphical_object.viewport_coordinates[-1]
                 point2 = graphical_object.viewport_coordinates[0]
                 painter.drawLine(QPointF(*point1), QPointF(*point2))
+            elif graphical_object.type == "Wavefront OBJ":
+                for face in graphical_object.faces:
+                    for i in range(len(face)-1):
+                        vertex_index1 = face[i]
+                        vertex_index2 = face[i+1]
+                        point1 = graphical_object.viewport_coordinates[vertex_index1-1]
+                        point2 = graphical_object.viewport_coordinates[vertex_index2-1]
+                        painter.drawLine(QPointF(*point1), QPointF(*point2))
+                    vertex_index1 = face[-1]
+                    vertex_index2 = face[0]
+                    point1 = graphical_object.viewport_coordinates[vertex_index1-1]
+                    point2 = graphical_object.viewport_coordinates[vertex_index2-1]
+                    painter.drawLine(QPointF(*point1), QPointF(*point2))
