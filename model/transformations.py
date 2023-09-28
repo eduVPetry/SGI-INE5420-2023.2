@@ -6,9 +6,10 @@ from PyQt5.QtCore import QPointF
 
 
 def viewport_transformation(_viewport) -> QPointF:
-    _translation = translation(1, -1)
+    _translation1 = translation(1, -1)
     _dilation = dilation(_viewport.width/2, -_viewport.height/2)
-    return compose([_translation, _dilation])
+    _translation2 = translation(_viewport.x_min, _viewport.y_min)
+    return compose([_translation1, _dilation, _translation2])
 
 def normalization(_window):
     w_cx, w_cy = _window.center()
