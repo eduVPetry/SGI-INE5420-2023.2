@@ -6,6 +6,9 @@ class Window:
         self.x_max = x_max
         self.y_max = y_max
 
+        self.X_MIN_NORM = self.Y_MIN_NORM = -1
+        self.X_MAX_NORM = self.Y_MAX_NORM = 1
+
         self.x_pan = 0
         self.y_pan = 0
         self.viewup_angle = 0  # degrees

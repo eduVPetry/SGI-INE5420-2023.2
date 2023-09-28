@@ -3,6 +3,8 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QGridLayout, QHBoxLayout, QMainWindow, QVBoxLayout, QWidget
 
 from view.buttons.add_object_button import AddObjectButton
+from view.buttons.cs_clipping_radio_button import CSClippingRadioButton
+from view.buttons.lb_clipping_radio_button import LBClippingRadioButton
 from view.buttons.transform_button import TransformButton
 from view.buttons.down_button import DownButton
 from view.buttons.left_button import LeftButton
@@ -56,6 +58,7 @@ class MainWindow(QMainWindow):
         # Labels
         self.table_label = Label("Display File", font, self.left_widget)
         self.control_label = Label("Window Control", font, self.left_widget)
+        self.clipping_label = Label("Clipping", font, self.left_widget)
         self.viewport_label = Label("Viewport", font, self.right_widget)
 
         # Buttons
@@ -70,6 +73,8 @@ class MainWindow(QMainWindow):
         self.rotate_left_button = RotateLeftButton(self.left_widget)
         self.down_button = DownButton(self.left_widget)
         self.rotate_right_button = RotateRightButton(self.left_widget)
+        self.cs_clipping_radio_button = CSClippingRadioButton(self.left_widget)
+        self.lb_clipping_radio_button = LBClippingRadioButton(self.left_widget)
 
         # Layout in the left side of the UI
         self.vertical_layout = QVBoxLayout(self.left_widget)
@@ -92,6 +97,11 @@ class MainWindow(QMainWindow):
         self.grid_layout.addWidget(self.down_button, 2, 1, 1, 1)
         self.grid_layout.addWidget(self.rotate_right_button, 2, 2, 1, 1)
         self.vertical_layout.addLayout(self.grid_layout)
+        self.vertical_layout.addWidget(self.clipping_label)
+        self.vertical_layout_2 = QVBoxLayout()
+        self.vertical_layout_2.addWidget(self.cs_clipping_radio_button)
+        self.vertical_layout_2.addWidget(self.lb_clipping_radio_button)
+        self.vertical_layout.addLayout(self.vertical_layout_2)
 
         # Layout in the right side of the UI
         self.vertical_layout_2 = QVBoxLayout(self.right_widget)

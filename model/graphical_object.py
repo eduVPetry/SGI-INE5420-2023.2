@@ -1,4 +1,5 @@
 from typing import List, Tuple
+import numpy as np
 
 from model.transformations import normalization, transform, viewport_transformation
 
@@ -11,7 +12,8 @@ class GraphicalObject:
         self.color_rgb = color_rgb
         self.world_coordinates = coordinates
         self.normalized_coordinates: List[Tuple[float, float]] = [None] * len(coordinates)
-        self.viewport_coordinates: List[Tuple[float, float]] = [None] * len(coordinates)
+        self.clipped_lines: List[List[Tuple[float, float], Tuple[float, float]]] = []
+        self.viewport_lines: List[Tuple[float, float]] = []
 
     def geometric_center(self) -> Tuple[float, float]:
         center_x = center_y = 0
@@ -31,4 +33,14 @@ class GraphicalObject:
 
     def viewport_transform(self, _viewport) -> None:
         transformation_matrix = viewport_transformation(_viewport)
-        self.viewport_coordinates = transform(transformation_matrix, self.normalized_coordinates)
+        viewport_lines = []
+        for line in self.clipped_lines:
+            (x0, y0), (x1, y1) = line
+            line0 = np.array([x0, y0, 1], dtype=float)
+            line1 = np.array([x1, y1, 1], dtype=float)
+            new_line0 = line0 @ transformation_matrix
+            new_line1 = line1 @ transformation_matrix
+            new_x0, new_y0, _ = new_line0
+            new_x1, new_y1, _ = new_line1
+            viewport_lines.append([(new_x0, new_y0), (new_x1, new_y1)])
+        self.viewport_lines = viewport_lines
