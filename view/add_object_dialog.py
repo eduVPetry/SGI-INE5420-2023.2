@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (
     QDialog, QDialogButtonBox, QFileDialog, QLineEdit, QPushButton,
     QTabWidget, QTextEdit, QVBoxLayout, QWidget
 )
+from model.bezier_curve import BezierCurve
 
 from model.point import Point
 from model.line import Line
@@ -31,11 +32,13 @@ class AddObjectDialog(QDialog):
         self.line_tab = QWidget(self.tab_widget)
         self.wireframe_tab = QWidget(self.tab_widget)
         self.wavefront_obj_tab = QWidget(self.tab_widget)
+        self.bezier_curve_tab = QWidget(self.tab_widget)
 
         self.tab_widget.addTab(self.point_tab, "Point")
         self.tab_widget.addTab(self.line_tab, "Line")
         self.tab_widget.addTab(self.wireframe_tab, "Wireframe")
         self.tab_widget.addTab(self.wavefront_obj_tab, "Wavefront OBJ")
+        self.tab_widget.addTab(self.bezier_curve_tab, "Bézier Curve")
 
         # Fonts for the labels
         font = QFont()
@@ -101,7 +104,8 @@ class AddObjectDialog(QDialog):
         # Wireframe file selector
         self.wireframe_text_edit = QTextEdit(self.wireframe_tab)
         self.open_button = QPushButton("Open CSV File", self.wireframe_tab)
-        self.open_button.clicked.connect(self.open_wireframe_file)
+        self.open_button.clicked.connect(lambda: self.open_file("Wireframe", "wireframe", \
+                                                                "CSV Files (*.csv)", self.wireframe_text_edit))
 
         layout = QVBoxLayout()
         layout.addWidget(self.wireframe_text_edit)
@@ -111,12 +115,24 @@ class AddObjectDialog(QDialog):
         # Wavefront OBJ file selector
         self.wavefront_obj_text_edit = QTextEdit(self.wavefront_obj_tab)
         self.open_button2 = QPushButton("Open Wavefront OBJ File", self.wavefront_obj_tab)
-        self.open_button2.clicked.connect(self.open_wavefront_obj_file)
+        self.open_button2.clicked.connect(lambda: self.open_file("Wavefront OBJ", "wavefront_obj", \
+                                                                 "OBJ Files (*.obj)", self.wavefront_obj_text_edit))
 
         layout2 = QVBoxLayout()
         layout2.addWidget(self.wavefront_obj_text_edit)
         layout2.addWidget(self.open_button2)
         self.wavefront_obj_tab.setLayout(layout2)
+
+        # Bézier Curve file selector
+        self.bezier_curve_text_edit = QTextEdit(self.bezier_curve_tab)
+        self.open_button3 = QPushButton("Open Bézier Curve File", self.bezier_curve_tab)
+        self.open_button3.clicked.connect(lambda: self.open_file("Bézier Curve", "bezier_curve", \
+                                                                 "CSV Files (*.csv)", self.bezier_curve_text_edit))
+
+        layout3 = QVBoxLayout()
+        layout3.addWidget(self.bezier_curve_text_edit)
+        layout3.addWidget(self.open_button3)
+        self.bezier_curve_tab.setLayout(layout3)
 
         # Ok and Cancel Buttons
         self.button_box = QDialogButtonBox(self)
@@ -164,6 +180,9 @@ class AddObjectDialog(QDialog):
                     face = tuple(map(int, line.split()[1:]))
                     faces.append(face)
             graphical_object = WavefrontOBJ(name, self.color_rgb, coordinates, faces)
+        elif current_index == 4:  # Bézier curve
+            control_points = []
+            graphical_object = BezierCurve(name, self.color_rgb, control_points)
 
         main_window = self.parent()
         main_window.display_file.add(graphical_object)
@@ -177,27 +196,14 @@ class AddObjectDialog(QDialog):
         super().reject()
 
     @pyqtSlot()
-    def open_wireframe_file(self):
+    def open_file(self, file_category, folder_name, file_type_extension, text_edit):
         options = QFileDialog.Options()
         options |= QFileDialog.ReadOnly
 
-        file_name, _ = QFileDialog.getOpenFileName(self, "Open Wireframe File", "./wireframe",
-                                                         "CSV Files (*.csv);;All Files (*)", options=options)
+        file_name, _ = QFileDialog.getOpenFileName(self, f"Open {file_category} File", f"./{folder_name}",
+                                                         f"{file_type_extension};;All Files (*)", options=options)
 
         if file_name:
             with open(file_name, "r") as file:
                 content = file.read()
-                self.wireframe_text_edit.setPlainText(content)
-
-    @pyqtSlot()
-    def open_wavefront_obj_file(self):
-        options = QFileDialog.Options()
-        options |= QFileDialog.ReadOnly
-
-        file_name, _ = QFileDialog.getOpenFileName(self, "Open Wavefront OBJ File", "./wavefront_obj",
-                                                         "Wavefront OBJ Files (*.obj);;All Files (*)", options=options)
-
-        if file_name:
-            with open(file_name, "r") as file:
-                content = file.read()
-                self.wavefront_obj_text_edit.setPlainText(content)
+                text_edit.setPlainText(content)
