@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QPointF
 from PyQt5.QtGui import QPainter, QPen, QColor
 from PyQt5.QtWidgets import QLabel
-from model.clipping import cohen_sutherland_clipping, point_clipping
+from model.clipping import cohen_sutherland_clipping
 
 from model.viewport import Viewport
 

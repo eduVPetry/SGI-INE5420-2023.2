@@ -182,6 +182,11 @@ class AddObjectDialog(QDialog):
             graphical_object = WavefrontOBJ(name, self.color_rgb, coordinates, faces)
         elif current_index == 4:  # Bézier curve
             control_points = []
+            bezier_curve_data = self.bezier_curve_text_edit.toPlainText()
+            lines = bezier_curve_data.strip().split("\n")
+            for i in range(1, len(lines)):
+                x, y = map(float, lines[i].split(","))
+                control_points.append((x, y))
             graphical_object = BezierCurve(name, self.color_rgb, control_points)
 
         main_window = self.parent()
