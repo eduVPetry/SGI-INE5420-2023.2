@@ -22,11 +22,11 @@ class AddObjectDialog(QDialog):
 
     def init_ui(self):
         self.setWindowTitle("Add Object")
-        self.resize(470, 410)
+        self.resize(530, 410)
 
         # Tabs
         self.tab_widget = QTabWidget(self)
-        self.tab_widget.setGeometry(QRect(30, 80, 401, 280))
+        self.tab_widget.setGeometry(QRect(30, 80, 460, 280))
 
         self.point_tab = QWidget(self.tab_widget)
         self.line_tab = QWidget(self.tab_widget)
