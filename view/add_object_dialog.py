@@ -4,8 +4,9 @@ from PyQt5.QtWidgets import (
     QDialog, QDialogButtonBox, QFileDialog, QLineEdit, QPushButton,
     QTabWidget, QTextEdit, QVBoxLayout, QWidget
 )
-from model.bezier_curve import BezierCurve
 
+from model.bspline import BSpline
+from model.bezier_curve import BezierCurve
 from model.point import Point
 from model.line import Line
 from model.wavefront_obj import WavefrontOBJ
@@ -22,23 +23,25 @@ class AddObjectDialog(QDialog):
 
     def init_ui(self):
         self.setWindowTitle("Add Object")
-        self.resize(530, 410)
+        self.resize(600, 410)
 
         # Tabs
         self.tab_widget = QTabWidget(self)
-        self.tab_widget.setGeometry(QRect(30, 80, 460, 280))
+        self.tab_widget.setGeometry(QRect(30, 80, 530, 280))
 
         self.point_tab = QWidget(self.tab_widget)
         self.line_tab = QWidget(self.tab_widget)
         self.wireframe_tab = QWidget(self.tab_widget)
         self.wavefront_obj_tab = QWidget(self.tab_widget)
         self.bezier_curve_tab = QWidget(self.tab_widget)
+        self.bspline_tab = QWidget(self.tab_widget)
 
         self.tab_widget.addTab(self.point_tab, "Point")
         self.tab_widget.addTab(self.line_tab, "Line")
         self.tab_widget.addTab(self.wireframe_tab, "Wireframe")
         self.tab_widget.addTab(self.wavefront_obj_tab, "Wavefront OBJ")
         self.tab_widget.addTab(self.bezier_curve_tab, "Bézier Curve")
+        self.tab_widget.addTab(self.bspline_tab, "B-Spline")
 
         # Fonts for the labels
         font = QFont()
@@ -103,7 +106,7 @@ class AddObjectDialog(QDialog):
 
         # Wireframe file selector
         self.wireframe_text_edit = QTextEdit(self.wireframe_tab)
-        self.open_button = QPushButton("Open CSV File", self.wireframe_tab)
+        self.open_button = QPushButton("Open Wireframe File", self.wireframe_tab)
         self.open_button.clicked.connect(lambda: self.open_file("Wireframe", "wireframe", \
                                                                 "CSV Files (*.csv)", self.wireframe_text_edit))
 
@@ -126,13 +129,24 @@ class AddObjectDialog(QDialog):
         # Bézier Curve file selector
         self.bezier_curve_text_edit = QTextEdit(self.bezier_curve_tab)
         self.open_button3 = QPushButton("Open Bézier Curve File", self.bezier_curve_tab)
-        self.open_button3.clicked.connect(lambda: self.open_file("Bézier Curve", "bezier_curve", \
+        self.open_button3.clicked.connect(lambda: self.open_file("Bézier Curve", "control_points", \
                                                                  "CSV Files (*.csv)", self.bezier_curve_text_edit))
 
         layout3 = QVBoxLayout()
         layout3.addWidget(self.bezier_curve_text_edit)
         layout3.addWidget(self.open_button3)
         self.bezier_curve_tab.setLayout(layout3)
+
+        # B-Spline file selector
+        self.bspline_text_edit = QTextEdit(self.bspline_tab)
+        self.open_button4 = QPushButton("Open B-Spline File", self.bspline_tab)
+        self.open_button4.clicked.connect(lambda: self.open_file("B-Spline", "control_points", \
+                                                                 "CSV Files (*csv)", self.bspline_text_edit))
+
+        layout4 = QVBoxLayout()
+        layout4.addWidget(self.bspline_text_edit)
+        layout4.addWidget(self.open_button4)
+        self.bspline_tab.setLayout(layout4)
 
         # Ok and Cancel Buttons
         self.button_box = QDialogButtonBox(self)
@@ -188,6 +202,14 @@ class AddObjectDialog(QDialog):
                 x, y = map(float, lines[i].split(","))
                 control_points.append((x, y))
             graphical_object = BezierCurve(name, self.color_rgb, control_points)
+        elif current_index == 5:  # B-Spline
+            control_points = []
+            bspline_data = self.bspline_text_edit.toPlainText()
+            lines = bspline_data.strip().split("\n")
+            for i in range(1, len(lines)):
+                x, y = map(float, lines[i].split(","))
+                control_points.append((x, y))
+            graphical_object = BSpline(name, self.color_rgb, control_points)
 
         main_window = self.parent()
         main_window.display_file.add(graphical_object)

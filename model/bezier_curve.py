@@ -22,7 +22,6 @@ class BezierCurve(GraphicalObject):
                              [-3,  3,  0, 0],
                              [ 1,  0,  0, 0]])
 
-        self.world_coordinates = []
         N = len(control_points)
         for i in range(0, N-2-(N-1)%3, 3):
             sub_curve = self.generate_sub_curve(control_points[i:i + 4])
