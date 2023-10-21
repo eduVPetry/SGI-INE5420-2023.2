@@ -10,7 +10,7 @@ class BSpline(GraphicalObject):
         super().__init__(name, "B-Spline", color_rgb, [])
         self.control_points = control_points
 
-        # B-Spline matrix ?????
+        # B-Spline matrix
         MBs = np.array([[-1,  3, -3, 1],
                         [ 3, -6,  3, 0],
                         [-3,  0,  3, 0],
@@ -19,6 +19,7 @@ class BSpline(GraphicalObject):
         δ = 0.1
         N = int(1 / δ)
 
+        # Forward differences matrix
         E = np.array([[     0,      0, 0, 1],
                       [  δ**3,   δ**2, δ, 0],
                       [6*δ**3, 2*δ**2, 0, 0],
@@ -33,7 +34,6 @@ class BSpline(GraphicalObject):
             x, Δx, Δ2x, Δ3x = E @ C_x
             y, Δy, Δ2y, Δ3y = E @ C_y
 
-            # x_old, y_old = x, y
             self.world_coordinates.append((x, y))
             for _ in range(N):
                 x += Δx
@@ -43,8 +43,6 @@ class BSpline(GraphicalObject):
                 Δy += Δ2y
                 Δ2y += Δ3y
                 self.world_coordinates.append((x, y))
-                # plt.plot([x_old, x], [y_old, y])
-                # x_old, y_old = x, y
 
     def clip(self, _window, clipping_method):
         clipped_lines = []
