@@ -8,7 +8,7 @@ class RotateLeftButton(QPushButton):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.init_ui()
-    
+
     def init_ui(self):
         self.setIcon(QIcon("./view/buttons/icons/rotate-left.svg"))
         self.clicked.connect(self.clicked_callback)

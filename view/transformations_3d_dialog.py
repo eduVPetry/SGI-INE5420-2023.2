@@ -4,19 +4,16 @@ from PyQt5.QtCore import Qt, QMetaObject, QRect
 from PyQt5.QtGui import QDoubleValidator, QFont
 from PyQt5.QtWidgets import (
     QDialog, QDialogButtonBox, QFormLayout, QHBoxLayout,
-    QLineEdit, QListWidget, QTabWidget, QVBoxLayout, QWidget
+    QLineEdit, QListWidget, QRadioButton, QTabWidget, QVBoxLayout, QWidget
 )
 
 from model.transformations import compose
-from view.buttons.add_transformation_button import AddTransformationButton
+from view.buttons.add_transformation_3d_button import AddTransformation3DButton
 from view.buttons.remove_transformation_button import RemoveTransformationButton
-from view.buttons.rotation_around_object_radio_button import RotationAroundObjectRadioButton
-from view.buttons.rotation_around_point_radio_button import RotationAroundPointRadioButton
-from view.buttons.rotation_around_world_radio_button import RotationAroundWorldRadioButton
 from view.label import Label
 
 
-class TransformationsDialog(QDialog):
+class Transformations3DDialog(QDialog):
 
     def __init__(self, graphical_object, parent=None):
         super().__init__(parent)
@@ -25,7 +22,7 @@ class TransformationsDialog(QDialog):
         self.init_ui()
 
     def init_ui(self):
-        self.setWindowTitle("Transformations")
+        self.setWindowTitle("Transformations 3D")
         self.resize(640, 360)
 
         # Tabs
@@ -58,32 +55,25 @@ class TransformationsDialog(QDialog):
         self.translation_label = Label("Translation", font_bold, self.translation_tab)
         self.displacement_in_x_label = Label("Displacement in x", font, self.displacement_input_widget)
         self.displacement_in_y_label = Label("Displacement in y", font, self.displacement_input_widget)
-        self.options_label = Label("Options", font_bold, self.rotation_options_widget)
-        self.rotation_type_label = Label("Rotation around the center of the world", font_bold, self.rotation_tab)
+        self.displacement_in_z_label = Label("Displacement in z", font, self.displacement_input_widget)
+        self.axis_label = Label("Rotation around axis", font_bold, self.rotation_options_widget)
         self.rotation_angle_label = Label("Rotation angle (degrees)", font, self.rotation_input_widget)
-        self.point_x_label = Label("x", font, self.rotation_input_widget)
-        self.point_y_label = Label("y", font, self.rotation_input_widget)
         self.dilation_label = Label("Dilation", font_bold, self.dilation_tab)
         self.scaling_in_x_label = Label("Scaling in x", font, self.scaling_input_widget)
         self.scaling_in_y_label = Label("Scaling in y", font, self.scaling_input_widget)
+        self.scaling_in_z_label = Label("Scaling in z", font, self.scaling_input_widget)
 
-        self.point_x_label.setVisible(False)
-        self.point_y_label.setVisible(False)
         self.translation_label.setGeometry(QRect(30, 40, 111, 16))
-        self.rotation_type_label.setGeometry(QRect(20, 160, 361, 21))
         self.dilation_label.setGeometry(QRect(30, 40, 81, 16))
 
         # Text inputs
         self.displacement_in_x_input = QLineEdit(self.displacement_input_widget)
         self.displacement_in_y_input = QLineEdit(self.displacement_input_widget)
+        self.displacement_in_z_input = QLineEdit(self.displacement_input_widget)
         self.rotation_angle_input = QLineEdit(self.rotation_input_widget)
-        self.point_x_input = QLineEdit(self.rotation_input_widget)
-        self.point_y_input = QLineEdit(self.rotation_input_widget)
         self.scaling_in_x_input = QLineEdit(self.scaling_input_widget)
         self.scaling_in_y_input = QLineEdit(self.scaling_input_widget)
-
-        self.point_x_input.setVisible(False)
-        self.point_y_input.setVisible(False)
+        self.scaling_in_z_input = QLineEdit(self.scaling_input_widget)
 
         # Input validator
         validator = QDoubleValidator()
@@ -91,12 +81,16 @@ class TransformationsDialog(QDialog):
             input_widget.setValidator(validator)
 
         # Radio Buttons
-        self.radio_button = RotationAroundWorldRadioButton(self.rotation_options_widget)
-        self.radio_button_2 = RotationAroundObjectRadioButton(self.rotation_options_widget)
-        self.radio_button_3 = RotationAroundPointRadioButton(self.rotation_options_widget)
+        self.rotation_x_radio_button = QRadioButton(self.rotation_options_widget)
+        self.rotation_y_radio_button = QRadioButton(self.rotation_options_widget)
+        self.rotation_z_radio_button = QRadioButton(self.rotation_options_widget)
+        self.rotation_x_radio_button.setText("X axis")
+        self.rotation_y_radio_button.setText("Y axis")
+        self.rotation_z_radio_button.setText("Z axis")
+        self.rotation_x_radio_button.setChecked(True)
 
         # Push Buttons
-        self.add_transformation_button = AddTransformationButton(self)
+        self.add_transformation_button = AddTransformation3DButton(self)
         self.remove_transformation_button = RemoveTransformationButton(self)
 
         # List widget
@@ -104,7 +98,7 @@ class TransformationsDialog(QDialog):
         self.list_widget.setGeometry(QRect(430, 90, 201, 211))
 
         # Layout
-        self.displacement_input_widget.setGeometry(QRect(50, 80, 200, 58))
+        self.displacement_input_widget.setGeometry(QRect(50, 80, 200, 75))
         self.verticalLayout_3 = QVBoxLayout(self.displacement_input_widget)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_4 = QHBoxLayout()
@@ -115,25 +109,25 @@ class TransformationsDialog(QDialog):
         self.horizontalLayout_5.addWidget(self.displacement_in_y_label)
         self.horizontalLayout_5.addWidget(self.displacement_in_y_input)
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.addWidget(self.displacement_in_z_label)
+        self.horizontalLayout_6.addWidget(self.displacement_in_z_input)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_6)
         self.rotation_options_widget.setGeometry(QRect(30, 30, 295, 102))
         self.verticalLayout = QVBoxLayout(self.rotation_options_widget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.addWidget(self.options_label)
-        self.verticalLayout.addWidget(self.radio_button)
-        self.verticalLayout.addWidget(self.radio_button_2)
-        self.verticalLayout.addWidget(self.radio_button_3)
+        self.verticalLayout.addWidget(self.axis_label)
+        self.verticalLayout.addWidget(self.rotation_x_radio_button)
+        self.verticalLayout.addWidget(self.rotation_y_radio_button)
+        self.verticalLayout.addWidget(self.rotation_z_radio_button)
         self.rotation_input_widget.setGeometry(QRect(50, 190, 256, 102))
         self.formLayout = QFormLayout(self.rotation_input_widget)
         self.formLayout.setLabelAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
         self.formLayout.setContentsMargins(0, 0, 0, 0)
         self.formLayout.setSpacing(3)
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.rotation_angle_label)
-        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.point_x_label)
-        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.point_y_label)
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.rotation_angle_input)
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.point_x_input)
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.point_y_input)
-        self.scaling_input_widget.setGeometry(QRect(50, 80, 192, 58))
+        self.scaling_input_widget.setGeometry(QRect(50, 80, 192, 75))
         self.verticalLayout_2 = QVBoxLayout(self.scaling_input_widget)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2 = QHBoxLayout()
@@ -144,6 +138,14 @@ class TransformationsDialog(QDialog):
         self.horizontalLayout_3.addWidget(self.scaling_in_y_label)
         self.horizontalLayout_3.addWidget(self.scaling_in_y_input)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.addWidget(self.scaling_in_y_label)
+        self.horizontalLayout_3.addWidget(self.scaling_in_y_input)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
+        self.horizontalLayout_7 = QHBoxLayout()
+        self.horizontalLayout_7.addWidget(self.scaling_in_z_label)
+        self.horizontalLayout_7.addWidget(self.scaling_in_z_input)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_7)
 
         # Ok and Cancel Buttons
         self.buttonBox = QDialogButtonBox(self)

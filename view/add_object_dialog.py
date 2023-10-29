@@ -189,7 +189,7 @@ class AddObjectDialog(QDialog):
             for line in wavefront_obj_data.split("\n"):
                 if line.startswith("v "):
                     x, y, z = map(float, line.split()[1:4])
-                    coordinates.append((x, y))
+                    coordinates.append((x, y, z))
                 elif line.startswith("f "):
                     face = tuple(map(int, line.split()[1:]))
                     faces.append(face)

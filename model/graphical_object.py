@@ -6,12 +6,12 @@ from model.transformations import normalization, transform, viewport_transformat
 
 class GraphicalObject:
 
-    def __init__(self, name: str, type: str, color_rgb: int, world_coordinates: List[Tuple[float, float]]) -> None:
+    def __init__(self, name: str, type: str, color_rgb: int, world_coordinates: List[Tuple[float, ...]]) -> None:
         self.name = name
         self.type = type
         self.color_rgb = color_rgb
         self.world_coordinates = world_coordinates
-        self.normalized_coordinates: List[Tuple[float, float]] = [None] * len(world_coordinates)
+        self.normalized_coordinates: List[Tuple[float, ...]] = [None] * len(world_coordinates)
         self.clipped_lines: List[List[Tuple[float, float], Tuple[float, float]]] = []
         self.viewport_lines: List[Tuple[float, float]] = []
 
