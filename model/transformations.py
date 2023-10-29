@@ -9,15 +9,6 @@ def compose(transformation_matrices: List[np.array]):
     dimensions = len(transformation_matrices[0])
     return reduce(np.matmul, transformation_matrices, np.identity(dimensions))
 
-# def transform(transformation_matrix: np.array, coordinates: Tuple[float, float]) -> Tuple[float, float]:
-#     transformed_coordinates = []
-#     for x, y in coordinates:
-#         old_coordinates = np.array([x, y, 1], dtype=float)
-#         new_coordinates = old_coordinates @ transformation_matrix
-#         new_x, new_y, _ = new_coordinates
-#         transformed_coordinates.append((new_x, new_y))
-#     return transformed_coordinates
-
 def transform(transformation_matrix: np.array, coordinates: List[Tuple[float, ...]]) -> List[Tuple[float, ...]]:
     transformed_coordinates = []
     for c in coordinates:
