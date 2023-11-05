@@ -21,9 +21,18 @@ class WavefrontOBJ(GraphicalObject):
         center_z /= len(self.world_coordinates)
         return center_x, center_y, center_z
 
+    def perspective_projection(self) -> None:
+        self.projected_coordinates = []
+        d = 1200  # distance to projection center
+        for x, y, z in self.world_coordinates:
+            x_new = (x * d) / (z + d)
+            y_new = (y * d) / (z + d)
+            self.projected_coordinates.append((x_new, y_new, 0))
+
     def normalize(self, _window) -> None:
+        self.perspective_projection()  # apply perspective projection before normalization
         transformation_matrix = normalization_3d(_window)
-        self.normalized_coordinates = transform(transformation_matrix, self.world_coordinates)
+        self.normalized_coordinates = transform(transformation_matrix, self.projected_coordinates)
 
     def clip(self, _window, clipping_method):
         clipped_lines = []
