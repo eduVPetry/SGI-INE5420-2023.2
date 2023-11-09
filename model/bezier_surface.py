@@ -106,11 +106,6 @@ class BezierSurface(GraphicalObject):
                 accept, new_line = clipping_method(x0, y0, x1, y1, _window)
                 if accept:
                     row.append(new_line)
-            #x0, y0, z0 = e[-1]
-            #x1, y1, z1 = e[0]
-            #accept, new_line = clipping_method(x0, y0, x1, y1, _window)
-            #if accept:
-            #    row.append(new_line)
             clipped_lines.append(row)
         self.clipped_lines = clipped_lines
 
