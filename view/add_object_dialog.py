@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import (
 from model.bspline_curve import BSplineCurve
 from model.bezier_curve import BezierCurve
 from model.bezier_surface import BezierSurface
+from model.bspline_surface import BSplineSurface
 from model.point import Point
 from model.line import Line
 from model.wavefront_obj import WavefrontOBJ
@@ -24,11 +25,11 @@ class AddObjectDialog(QDialog):
 
     def init_ui(self):
         self.setWindowTitle("Add Object")
-        self.resize(770, 410)
+        self.resize(900, 410)
 
         # Tabs
         self.tab_widget = QTabWidget(self)
-        self.tab_widget.setGeometry(QRect(30, 80, 700, 280))
+        self.tab_widget.setGeometry(QRect(30, 80, 830, 280))
 
         self.point_tab = QWidget(self.tab_widget)
         self.line_tab = QWidget(self.tab_widget)
@@ -37,6 +38,7 @@ class AddObjectDialog(QDialog):
         self.bezier_curve_tab = QWidget(self.tab_widget)
         self.bspline_curve_tab = QWidget(self.tab_widget)
         self.bezier_surface_tab = QWidget(self.tab_widget)
+        self.bspline_surface_tab = QWidget(self.tab_widget)
 
         self.tab_widget.addTab(self.point_tab, "Point")
         self.tab_widget.addTab(self.line_tab, "Line")
@@ -45,6 +47,7 @@ class AddObjectDialog(QDialog):
         self.tab_widget.addTab(self.bezier_curve_tab, "Bézier Curve")
         self.tab_widget.addTab(self.bspline_curve_tab, "B-Spline Curve")
         self.tab_widget.addTab(self.bezier_surface_tab, "Bézier Surface")
+        self.tab_widget.addTab(self.bspline_surface_tab, "B-Spline Surface")
 
         # Fonts for the labels
         font = QFont()
@@ -162,6 +165,17 @@ class AddObjectDialog(QDialog):
         layout5.addWidget(self.open_button5)
         self.bezier_surface_tab.setLayout(layout5)
 
+        # B-Spline Surface file selector
+        self.bspline_surface_text_edit = QTextEdit(self.bspline_surface_tab)
+        self.open_button6 = QPushButton("Open B-Spline Surface File", self.bspline_surface_tab)
+        self.open_button6.clicked.connect(lambda: self.open_file("B-Spline Surface", "control_points/surfaces", \
+                                                                 "CSV Files (*.csv)", self.bspline_surface_text_edit))
+
+        layout6 = QVBoxLayout()
+        layout6.addWidget(self.bspline_surface_text_edit)
+        layout6.addWidget(self.open_button6)
+        self.bspline_surface_tab.setLayout(layout6)
+
         # Ok and Cancel Buttons
         self.button_box = QDialogButtonBox(self)
         self.button_box.setGeometry(QRect(10, 370, 450, 32))
@@ -235,6 +249,17 @@ class AddObjectDialog(QDialog):
                     row.append((x, y, z))
                 control_points.append(row)
             graphical_object = BezierSurface(name, self.color_rgb, control_points)
+        elif current_index == 7:  # B-Spline surface
+            control_points = []
+            bspline_surface_data = self.bspline_surface_text_edit.toPlainText()
+            lines = bspline_surface_data.strip().split("\n")
+            for i in range(1, len(lines)):
+                row = []
+                for point in lines[i].split():
+                    x, y, z = map(float, point.split(","))
+                    row.append((x, y, z))
+                control_points.append(row)
+            graphical_object = BSplineSurface(name, self.color_rgb, control_points)
 
         main_window = self.parent()
         main_window.display_file.add(graphical_object)
