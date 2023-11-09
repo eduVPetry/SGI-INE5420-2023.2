@@ -59,5 +59,10 @@ class ViewportWidget(QLabel):
             graphical_object.viewport_transform(self._viewport)
 
             # Draw graphical object
-            for point1, point2 in graphical_object.viewport_lines:
-                painter.drawLine(QPointF(*point1), QPointF(*point2))
+            if graphical_object.type == "Bézier Surface":
+                for e in graphical_object.viewport_lines:
+                    for point1, point2 in e:
+                        painter.drawLine(QPointF(*point1), QPointF(*point2))
+            else:
+                for point1, point2 in graphical_object.viewport_lines:
+                    painter.drawLine(QPointF(*point1), QPointF(*point2))

@@ -4,10 +4,10 @@ from typing import List, Tuple
 from model.graphical_object import GraphicalObject
 
 
-class BSpline(GraphicalObject):
+class BSplineCurve(GraphicalObject):
 
     def __init__(self, name: str, color_rgb: int, control_points: List[Tuple[float, float]]):
-        super().__init__(name, "B-Spline", color_rgb, [])
+        super().__init__(name, "B-Spline Curve", color_rgb, [])
         self.control_points = control_points
 
         # B-Spline matrix
