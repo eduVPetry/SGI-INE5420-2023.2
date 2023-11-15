@@ -22,7 +22,9 @@ class TransformButton(QPushButton):
         current_row = display_file.currentRow()
         if current_row >= 0:
             graphical_object = display_file.graphical_objects[current_row]
-            if graphical_object.type == "Wavefront OBJ" or graphical_object.type == "Bézier Surface":
+            if graphical_object.type == "Wavefront OBJ" or \
+                graphical_object.type == "Bézier Surface" or \
+                graphical_object.type == "B-Spline Surface":
                 dialog = Transformations3DDialog(graphical_object, self.window())
             else:
                 dialog = TransformationsDialog(graphical_object, self.window())
